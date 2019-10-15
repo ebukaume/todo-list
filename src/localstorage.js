@@ -1,5 +1,5 @@
-const LocaleStorage = (() => {
-  const defaultKey = '_disposableStorage_';
+const storage = (() => {
+  const defaultKey = 'todo_list_js';
   const store = (projects, key = defaultKey) => {
     localStorage.setItem(key, JSON.stringify(projects));
   };
@@ -16,4 +16,4 @@ const LocaleStorage = (() => {
   };
 })();
 
-export default LocaleStorage;
+export default storage;
