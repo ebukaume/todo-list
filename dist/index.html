@@ -12,104 +12,21 @@
 
 <body>
   <div id="content" class="text-off-white">
-    <nav class="navbar-fixed">
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <div class="max-width">
-        <a href="#" class="text-off-white">
-          <i class="large material-icons">today</i>
-          <h1>Todos</h1>
-        </a>
-      </div>
-    </nav>
+  </div>
 
-    <div id="create-project-form-modal" class="modal">
-      <div class="modal-content grey darken-4">
-        <form id="create-project-form" action="#">
-          <div class="input-field">
-            <label for="title">Name:</label>
-            <input type="text" name="title" id="title" class="validate"
-            placeholder="Add New Project" required="" aria-required="true">
-          </div>
-          <button id="submit" class="modal-close red accent-4 modal-action btn waves-effect waves-light" type="submit"
-            name="action">
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
+  <script type="module" src="./main.js"> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const elems = document.querySelectorAll('.sidenav');
+      M.Sidenav.init(elems);
+    });
 
-    <main>
-      <div class="max-width">
-        <ul id="nav-mobile" class="sidenav sidenav-fixed ">
-          <li>
-            <a class=" modal-trigger" href="#create-project-form-modal">
-              <i class="material-icons">view_module</i>
-              Projects
-              <i class="material-icons right">add</i>
-            </a>
-          </li>
-          <div class="divider"></div>
-          <li class="project-btn"><a href="#!">Default Project</a></li>
-          <li class="project-btn"><a href="#!">First Project</a></li>
-          <li class="project-btn"><a href="#!">Second Project</a></li>
-          <li id="add-project-btn">
-            <a class=" modal-trigger" href="#create-project-form-modal">
-              Add Project
-              <i class="material-icons">add</i>
-            </a>
-          </li>
-        </ul>
-        <div class="todos-area">
-          <table>
-            <thead>
-              <div id="current-project">
-                Project
-              </div>
-            </thead>
-            <tbody id="project-todos">
-              <tr>
-                <td><label>
-                    <input type="checkbox" />
-                    <span>Red</span>
-                  </label>
-                </td>
-                <td class="right">menu</td>
-              </tr>
-              <tr>
-                <td><label>
-                    <input type="checkbox" />
-                    <span>Red</span>
-                  </label>
-                </td>
-                <td class="right">menu</td>
-              </tr>
-              <tr>
-                <td><label>
-                    <input type="checkbox" />
-                    <span>Red</span>
-                  </label>
-                </td>
-                <td class="right">menu</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </main>
-
-    <script type="module" src="./main.js"> </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const elems = document.querySelectorAll('.sidenav');
-        M.Sidenav.init(elems);
-      });
-
-      document.addEventListener('DOMContentLoaded', function () {
-        var elems = document.querySelectorAll('.modal');
-        var instances = M.Modal.init(elems);
-      });
-    </script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems);
+    });
+  </script>
 </body>
 
 </html>
