@@ -14,15 +14,16 @@ const app = (() => {
   const getDB = () => DB;
 
   const createProject = ({ name }) => {
+    const id = idGenerator();
     const newProject = project({
-      id: idGenerator(),
+      id,
       name,
     });
 
     DB[newProject.id] = newProject;
     storage.store(DB);
 
-    return DB;
+    return newProject;
   };
 
   const deleteProject = ({ id }) => {
