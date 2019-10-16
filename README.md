@@ -7,16 +7,18 @@
   <a href="https://github.com/ebukaume/todo-list/graphs/commit-activity" target="_blank">
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
-  <a href="https://github.com/ebukaume/todo-list/tree/master/LICENSE" target="_blank">
+  <a href="https://github.com/ebukaume/todo-list/blob/master/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/github/license/ebukaume/Todo List" />
   </a>
   <a href="https://twitter.com/ebukaume" target="_blank">
     <img alt="Twitter: ebukaume" src="https://img.shields.io/twitter/follow/ebukaume.svg?style=social" />
   </a>
   <a href="https://twitter.com/ArNazeh" target="_blank">
-    <img alt="Twitter: ArNazeh" src="https://img.shields.io/twitter/follow/ebukaume.svg?style=social" />
+    <img alt="Twitter: ArNazeh" src="https://img.shields.io/twitter/follow/ArNazeh.svg?style=social" />
   </a>
 </p>
+
+<br>
 
 This project is part of a series of projects to be completed by students of [Microverse](https://www.microverse.org/ 'The Global School for Remote Software Developers!').
 
@@ -29,8 +31,8 @@ The full project requirements can be found [here](https://www.theodinproject.com
 - JavaScript (ES6)
 - HMTL
 - SCSS
-- webpack
 - npm
+- webpack
 
 ### ✨ [Live Demo](https://github.com/ebukaume/todo-list)
 
@@ -81,4 +83,4 @@ Give a ⭐️ if you like this project!
 
 ## 📝 License
 
-This project is [MIT](https://github.com/ebukaume/todo-list/tree/master/LICENSE) licensed.
+This project is [MIT](https://github.com/ebukaume/todo-list/blob/master/LICENSE) licensed.
