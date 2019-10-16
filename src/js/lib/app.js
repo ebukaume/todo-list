@@ -7,8 +7,8 @@ const app = (() => {
   let DB = {};
 
   const initialize = () => {
-    DB = storage.fetch();
-    return DB;
+    DB = storage.fetch() || DB;
+    storage.store(DB);
   };
 
   const getDB = () => DB;
