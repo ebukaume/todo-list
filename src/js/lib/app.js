@@ -6,16 +6,14 @@ import idGenerator from './util/id_generator';
 const app = (() => {
   let DB = {};
 
-  const getDB = () => DB;
-
   const initialize = () => {
     DB = storage.fetch();
     return DB;
   };
 
-  const createProject = ({
-    name,
-  }) => {
+  const getDB = () => DB;
+
+  const createProject = ({ name }) => {
     const newProject = project({
       id: idGenerator(),
       name,
@@ -27,37 +25,25 @@ const app = (() => {
     return DB;
   };
 
-  const deleteProject = ({
-    id,
-  }) => {
+  const deleteProject = ({ id }) => {
     delete DB[id];
     storage.store(DB);
 
     return DB;
   };
 
-  const editProject = ({
-    id,
-    name,
-  }) => {
+  const editProject = ({ id, name }) => {
     DB[id].name = name;
     storage.store(DB);
 
     return DB;
   };
 
-  const getProject = ({
-    id,
-  }) => DB[id];
-
+  const getProject = ({ id }) => DB[id];
 
   const createTodo = ({
-    projectId,
-    title,
-    desc,
-    dueDate,
-    priority,
-  }) => {
+ projectId, title, desc, dueDate, priority 
+}) => {
     if (DB[projectId] === undefined) return false;
 
     const newTodo = todo({
@@ -67,16 +53,13 @@ const app = (() => {
       dueDate,
       priority,
     });
-    DB[projectId].todos[todo.id] = newTodo;
+    DB[projectId].todos[newTodo.id] = newTodo;
     storage.store(DB);
 
     return newTodo;
   };
 
-  const deleteTodo = ({
-    projectId,
-    todoId,
-  }) => {
+  const deleteTodo = ({ projectId, todoId }) => {
     const targetProject = DB[projectId];
 
     if (targetProject === undefined) return false;
@@ -87,17 +70,13 @@ const app = (() => {
   };
 
   const editTodo = ({
-    projectId,
-    todoId,
-    title,
-    desc,
-    dueDate,
-    priority,
-  }) => {
+ projectId, todoId, title, desc, dueDate, priority 
+}) => {
     const targetProject = DB[projectId];
 
     if (targetProject === undefined) return false;
-    const targetTodo = targetProject[todoId];
+    const targetTodo = targetProject.todos[todoId];
+
     if (title) targetTodo.title = title;
     if (desc) targetTodo.desc = desc;
     if (dueDate) targetTodo.dueDate = dueDate;
@@ -107,14 +86,11 @@ const app = (() => {
     return DB;
   };
 
-  const toggleTodoStatus = ({
-    projectId,
-    todoId,
-  }) => {
+  const toggleTodoStatus = ({ projectId, todoId }) => {
     const targetProject = DB[projectId];
 
     if (targetProject === undefined) return false;
-    targetProject[todoId].isDone = targetProject[todoId].isDone === false;
+    targetProject.todos[todoId].isDone = targetProject.todos[todoId].isDone === false;
     storage.store(DB);
 
     return targetProject;
