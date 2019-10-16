@@ -31,14 +31,19 @@ body {
   }
 }
 
+.modal {
+  background: none;
+    margin-top: 20%;
+}
+
 main {
-  height: 100vh;
   background-color: $base-color;
 
   .max-width {
     position: relative;
 
     .sidenav {
+      height: 100vh;
       background: $base-color;
       padding-top: 30px;
       box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14), 0 3px 0 0 rgba(0, 0, 0, 0.12),
@@ -46,6 +51,11 @@ main {
 
       &.sidenav-fixed {
         position: absolute;
+        i {
+          &.right {
+            margin: 0;
+          }
+        }
       }
     }
   }

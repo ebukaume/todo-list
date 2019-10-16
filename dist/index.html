@@ -22,11 +22,27 @@
       </div>
     </nav>
 
+    <div id="create-project-form-modal" class="modal">
+      <div class="modal-content grey darken-4">
+        <form id="create-project-form" action="#">
+          <div class="input-field">
+            <label for="title">Name:</label>
+            <input type="text" name="title" id="title" class="validate"
+            placeholder="Add New Project" required="" aria-required="true">
+          </div>
+          <button id="submit" class="modal-close red accent-4 modal-action btn waves-effect waves-light" type="submit"
+            name="action">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+
     <main>
       <div class="max-width">
         <ul id="nav-mobile" class="sidenav sidenav-fixed ">
           <li>
-            <a href="#!">
+            <a class=" modal-trigger" href="#create-project-form-modal">
               <i class="material-icons">view_module</i>
               Projects
               <i class="material-icons right">add</i>
@@ -37,7 +53,8 @@
           <li class="project-btn"><a href="#!">First Project</a></li>
           <li class="project-btn"><a href="#!">Second Project</a></li>
           <li id="add-project-btn">
-            <a href="#!">Add Project
+            <a class=" modal-trigger" href="#create-project-form-modal">
+              Add Project
               <i class="material-icons">add</i>
             </a>
           </li>
@@ -67,13 +84,13 @@
                 <td class="right">menu</td>
               </tr>
               <tr>
-                  <td><label>
-                      <input type="checkbox" />
-                      <span>Red</span>
-                    </label>
-                  </td>
-                  <td class="right">menu</td>
-                </tr>
+                <td><label>
+                    <input type="checkbox" />
+                    <span>Red</span>
+                  </label>
+                </td>
+                <td class="right">menu</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -86,6 +103,11 @@
       document.addEventListener('DOMContentLoaded', () => {
         const elems = document.querySelectorAll('.sidenav');
         M.Sidenav.init(elems);
+      });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
       });
     </script>
 </body>

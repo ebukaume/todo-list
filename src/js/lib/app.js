@@ -42,8 +42,8 @@ const app = (() => {
   const getProject = ({ id }) => DB[id];
 
   const createTodo = ({
- projectId, title, desc, dueDate, priority 
-}) => {
+    projectId, title, desc, dueDate, priority,
+  }) => {
     if (DB[projectId] === undefined) return false;
 
     const newTodo = todo({
@@ -70,8 +70,8 @@ const app = (() => {
   };
 
   const editTodo = ({
- projectId, todoId, title, desc, dueDate, priority 
-}) => {
+    projectId, todoId, title, desc, dueDate, priority,
+  }) => {
     const targetProject = DB[projectId];
 
     if (targetProject === undefined) return false;
