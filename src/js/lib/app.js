@@ -9,8 +9,8 @@ const app = (() => {
   const getDB = () => DB;
 
   const initialize = () => {
-    DB = storage.fetch();
-    return DB;
+    DB = storage.fetch() || DB;
+    storage.store(DB);
   };
 
   const createProject = ({
