@@ -1,3 +1,72 @@
-body{
-    background-color: red;
+$base-color: #282828;
+
+body {
+  * {
+    color: rgba(255, 255, 255, 0.87) !important;
+  }
+}
+.max-width {
+  max-width: 935px;
+  width: 100%;
+  margin: auto;
+}
+
+.navbar-fixed {
+  height: 3rem;
+  z-index: 9999;
+  background-color: $base-color;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0.281),
+    0 1px 5px 0 rgba(0, 0, 0, 0.034);
+
+  a {
+    display: flex;
+    .material-icons {
+      line-height: 3rem;
+      height: 3rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin: 0.5rem;
+    }
+  }
+}
+
+main {
+  height: 100vh;
+  background-color: $base-color;
+
+  .max-width {
+    position: relative;
+
+    .sidenav {
+      background: $base-color;
+      padding-top: 30px;
+      box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14), 0 3px 0 0 rgba(0, 0, 0, 0.12),
+        0 1px 0 0 rgba(0, 0, 0, 0.2);
+
+      &.sidenav-fixed {
+        position: absolute;
+      }
+    }
+  }
+
+  .todos-area {
+    height: 100vh;
+    width: 100%;
+    padding: 30px;
+    background-color: #1f1f1f;
+
+    #current-project {
+      height: 48px;
+      font-weight: bold;
+    }
+  }
+}
+
+@media only screen and (min-width: 980px) {
+  main {
+    .max-width {
+      padding-left: 300px;
+    }
+  }
 }
