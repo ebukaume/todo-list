@@ -35,7 +35,8 @@ const UI = (() => {
         </a>
       </li>
       <div class="divider"></div>
-      <div id="projects-list"></div>
+      <div id="projects-list">
+      </div>
       <li id="add-project-btn">
         <a class=" modal-trigger" href="#create-project-form-modal">
           Add Project
@@ -45,7 +46,12 @@ const UI = (() => {
     </ul>
     <div class="todos-area">
       <table>
-
+      <thead >
+        <div id="project-header">
+        <h5>Project Name<h5>
+        <div class="divider"></div>
+        </div>
+      </thead>
       </table>
     </div>
   </div>
@@ -54,37 +60,60 @@ const UI = (() => {
   };
 
   let projectsList;
+  let projectHeader;
 
-  const addListenersToProjectList = () => {
+  const renderProject = ({
+    DB,
+    id,
+  }) => {
+    const html = `
+    <h5>${DB[id].name}<h5>
+    <div class="divider"></div>
+    `;
+    projectHeader.innerHTML = html;
+  };
+
+  const addListenersToProjectsList = (DB) => {
     Array.from(projectsList.children).forEach((project) => {
       project.addEventListener('click', () => {
-        console.log('3aaa');
+        const projectID = project.getAttribute('data-id');
+
+        UI.renderProject({
+          DB,
+          id: projectID,
+        });
       });
     });
   };
 
-  const renderProjects = (DB) => {
+  const renderProjectsList = (DB) => {
     let html = '';
     Object.keys(DB).forEach((projectID) => {
       html += `
-        <li class="project-btn">
+        <li class="project-btn" data-id="${projectID}">
           <a href="#!"> ${DB[projectID].name}
           </a>
         </li>
       `;
     });
     projectsList.innerHTML = html;
-    addListenersToProjectList();
+
+    addListenersToProjectsList(DB);
   };
 
   const initialize = (DB) => {
     renderStaticHtml();
     projectsList = document.getElementById('projects-list');
+    projectHeader = document.getElementById('project-header');
 
-    renderProjects(DB);
+    renderProjectsList(DB);
+    renderProject({
+      DB,
+      id: Object.keys(DB)[0],
+    });
   };
 
-  const getListiners = () => {
+  const getInputs = () => {
     const createProjectForm = document.getElementById('create-project-form');
     return [createProjectForm];
   };
@@ -92,8 +121,9 @@ const UI = (() => {
 
   return {
     initialize,
-    getListiners,
-    renderProjects,
+    getInputs,
+    renderProjectsList,
+    renderProject,
   };
 })();
 

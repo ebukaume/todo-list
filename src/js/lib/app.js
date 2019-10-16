@@ -4,7 +4,7 @@ import todo from './factories/todo';
 import idGenerator from './util/id_generator';
 
 const app = (() => {
-  let DB = {};
+  let DB = { 1: { id: 1, name: 'Demo Project!', todos: {} } };
 
   const initialize = () => {
     DB = storage.fetch() || DB;

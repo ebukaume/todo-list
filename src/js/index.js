@@ -7,18 +7,16 @@ UI.initialize(app.getDB());
 
 const [
   createProjectForm,
-] = UI.getListiners();
+] = UI.getInputs();
 
 createProjectForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = createProjectForm[0].value;
 
   app.createProject({ name });
-  const projectsList = UI.renderProjects(app.getDB());
+  UI.renderProjectsList(app.getDB());
 
   // eslint-disable-next-line no-undef
   M.Modal.getInstance(document.getElementById('create-project-form-modal')).close();
   createProjectForm.reset();
 });
-
-console.log(app.getDB());
