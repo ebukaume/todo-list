@@ -8,7 +8,7 @@
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
   <a href="https://github.com/ebukaume/todo-list/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/ebukaume/Todo List" />
+    <img alt="License: MIT" src="https://img.shields.io/github/license/ebukaume/todo-list" />
   </a>
   <a href="https://twitter.com/ebukaume" target="_blank">
     <img alt="Twitter: ebukaume" src="https://img.shields.io/twitter/follow/ebukaume.svg?style=social" />
