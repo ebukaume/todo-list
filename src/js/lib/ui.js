@@ -13,9 +13,11 @@ const UI = (() => {
 <div id="create-project-form-modal" class="modal">
   <div class="modal-content grey darken-4">
     <form id="create-project-form" action="#">
+      <h6 class="bold">Add project</h6>
       <div class="input-field">
-        <input type="text" name="title" id="title" class="validate" placeholder="Add New Project" required=""
-          aria-required="true">
+      <label>Project name</label>
+        <input type="text" name="title" id="title" class="validate"
+          required="" aria-required="true">
       </div>
       <button id="submit" class="red accent-4 modal-action btn waves-effect waves-light" type="submit"
         name="action">
@@ -45,14 +47,24 @@ const UI = (() => {
       </li>
     </ul>
     <div class="todos-area">
-      <table>
-      <thead >
-        <div id="project-header">
-        <h5>Project Name<h5>
+    <table>
+    <thead >
+    <div id="project-header">
+        <h5>Project Name</h5>
         <div class="divider"></div>
         </div>
       </thead>
+      <tbody id="project-todos">
+      </tbody>
       </table>
+      <ul class="todo-row">
+        <li id="add-todo-btn">
+          <a class="modal-trigger" href="#create-todo-form-modal">
+            Add Project
+            <i class="material-icons left red-text">add</i>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </main>
@@ -61,29 +73,49 @@ const UI = (() => {
 
   let projectsList;
   let projectHeader;
+  let projectDeleteBtn;
+  let projectTodos;
 
-  const renderProject = ({
-    DB,
-    id,
-  }) => {
+  const renderTodos = ({ todos }) => {
+    let html = '';
+    Object.keys(todos).forEach((todoID) => {
+      const todo = todos[todoID];
+      html += `
+      <div class="todo-row">
+        <tr>
+          <td>
+            <label>
+                <input type="checkbox" />
+                <span>${todo.title}</span>
+            </label>
+          </td>
+        </tr>
+        <tr class="edit ">
+          <td>
+            <label>
+                <input type="checkbox" />
+                <span>${todo.title}</span>
+            </label>
+          </td>
+        </tr>
+      </div>
+      `;
+    });
+    projectTodos.innerHTML = html;
+  };
+
+  const renderProject = ({ name, id, todos }) => {
     const html = `
-    <h5>${DB[id].name}<h5>
+    <h5>${name}
+      <i class="material-icons right red-text" id="project-delete-btn"
+       data-id="${id}">
+        delete
+      </i>
+    </h5>
     <div class="divider"></div>
     `;
     projectHeader.innerHTML = html;
-  };
-
-  const addListenersToProjectsList = (DB) => {
-    Array.from(projectsList.children).forEach((project) => {
-      project.addEventListener('click', () => {
-        const projectID = project.getAttribute('data-id');
-
-        UI.renderProject({
-          DB,
-          id: projectID,
-        });
-      });
-    });
+    // renderTodos({ todos });
   };
 
   const renderProjectsList = (DB) => {
@@ -97,25 +129,26 @@ const UI = (() => {
       `;
     });
     projectsList.innerHTML = html;
+    return projectsList;
+  };
 
-    addListenersToProjectsList(DB);
+  const updateDomElements = () => {
+    projectsList = document.getElementById('projects-list');
+    projectHeader = document.getElementById('project-header');
+    projectTodos = document.getElementById('project-todos');
   };
 
   const initialize = (DB) => {
     renderStaticHtml();
-    projectsList = document.getElementById('projects-list');
-    projectHeader = document.getElementById('project-header');
-
+    updateDomElements();
     renderProjectsList(DB);
-    renderProject({
-      DB,
-      id: Object.keys(DB)[0],
-    });
+    renderProject({ project: DB[Object.keys(DB)[0]] });
   };
 
   const getInputs = () => {
     const createProjectForm = document.getElementById('create-project-form');
-    return [createProjectForm];
+    projectDeleteBtn = document.getElementById('project-delete-btn');
+    return { createProjectForm, projectDeleteBtn };
   };
 
 
