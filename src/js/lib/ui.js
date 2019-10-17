@@ -106,10 +106,12 @@ const UI = (() => {
   const renderProject = ({ project }) => {
     const html = `
     <h5>${project.name}
-    <i class="material-icons right red-text" id="project-delete-btn"
-    data-id="${project.id}">
-    delete
-    </i>
+    <a href="#!" id="project-delete-btn"
+      data-id="${project.id}"
+      <i class="material-icons right grey-text " >
+      delete
+      </i>
+      </a>
     </h5>
     <div class="divider"></div>
     `;
@@ -121,9 +123,10 @@ const UI = (() => {
     let html = '';
     projects.forEach((project) => {
       html += `
-      <li class="project-btn" data-id="${project.id}">
-      <a href="#!"> ${project.name}
-      </a>
+      <li ">
+        <a href="#!" class="project-btn" data-id="${project.id}">
+          ${project.name}
+        </a>
       </li>
       `;
     });
@@ -136,11 +139,15 @@ const UI = (() => {
     projectHeader = document.getElementById('project-header');
   };
 
+  const renderAll = ({ projects, project }) => {
+    renderProjectsList({ projects });
+    renderProject({ project: project || projects[0] });
+  };
+
   const initialize = ({ projects }) => {
     renderStaticHtml();
     updateDomElements();
-    renderProjectsList({ projects });
-    renderProject({ project: projects[0] });
+    renderAll({ projects });
 
     return {
       projectsList,
@@ -153,6 +160,7 @@ const UI = (() => {
     initialize,
     renderProjectsList,
     renderProject,
+    renderAll,
   };
 })();
 
