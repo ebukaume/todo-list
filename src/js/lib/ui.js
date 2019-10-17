@@ -71,46 +71,45 @@ const UI = (() => {
   `;
   };
 
+  let createProjectForm;
   let projectsList;
   let projectHeader;
-  let projectDeleteBtn;
-  let projectTodos;
 
-  const renderTodos = ({ todos }) => {
-    let html = '';
-    Object.keys(todos).forEach((todoID) => {
-      const todo = todos[todoID];
-      html += `
-      <div class="todo-row">
-        <tr>
-          <td>
-            <label>
-                <input type="checkbox" />
-                <span>${todo.title}</span>
-            </label>
-          </td>
-        </tr>
-        <tr class="edit ">
-          <td>
-            <label>
-                <input type="checkbox" />
-                <span>${todo.title}</span>
-            </label>
-          </td>
-        </tr>
-      </div>
-      `;
-    });
-    projectTodos.innerHTML = html;
-  };
+  // const renderTodos = ({ todos }) => {
+  //   let html = '';
+  //   Object.keys(todos).forEach((todoID) => {
+  //     const todo = todos[todoID];
+  //     html += `
+  //     <div class="todo-row">
+  //     <tr>
+  //     <td>
+  //     <label>
+  //     <input type="checkbox" />
+  //     <span>${todo.title}</span>
+  //     </label>
+  //     </td>
+  //     </tr>
+  //     <tr class="edit ">
+  //     <td>
+  //     <label>
+  //     <input type="checkbox" />
+  //     <span>${todo.title}</span>
+  //     </label>
+  //     </td>
+  //     </tr>
+  //     </div>
+  //     `;
+  //   });
+  //   projectTodos.innerHTML = html;
+  // };
 
-  const renderProject = ({ name, id, todos }) => {
+  const renderProject = ({ project }) => {
     const html = `
-    <h5>${name}
-      <i class="material-icons right red-text" id="project-delete-btn"
-       data-id="${id}">
-        delete
-      </i>
+    <h5>${project.name}
+    <i class="material-icons right red-text" id="project-delete-btn"
+    data-id="${project.id}">
+    delete
+    </i>
     </h5>
     <div class="divider"></div>
     `;
@@ -118,43 +117,40 @@ const UI = (() => {
     // renderTodos({ todos });
   };
 
-  const renderProjectsList = (DB) => {
+  const renderProjectsList = ({ projects }) => {
     let html = '';
-    Object.keys(DB).forEach((projectID) => {
+    projects.forEach((project) => {
       html += `
-        <li class="project-btn" data-id="${projectID}">
-          <a href="#!"> ${DB[projectID].name}
-          </a>
-        </li>
+      <li class="project-btn" data-id="${project.id}">
+      <a href="#!"> ${project.name}
+      </a>
+      </li>
       `;
     });
     projectsList.innerHTML = html;
-    return projectsList;
   };
 
   const updateDomElements = () => {
+    createProjectForm = document.getElementById('create-project-form');
     projectsList = document.getElementById('projects-list');
     projectHeader = document.getElementById('project-header');
-    projectTodos = document.getElementById('project-todos');
   };
 
-  const initialize = (DB) => {
+  const initialize = ({ projects }) => {
     renderStaticHtml();
     updateDomElements();
-    renderProjectsList(DB);
-    renderProject({ project: DB[Object.keys(DB)[0]] });
-  };
+    renderProjectsList({ projects });
+    renderProject({ project: projects[0] });
 
-  const getInputs = () => {
-    const createProjectForm = document.getElementById('create-project-form');
-    projectDeleteBtn = document.getElementById('project-delete-btn');
-    return { createProjectForm, projectDeleteBtn };
+    return {
+      projectsList,
+      projectHeader,
+      createProjectForm,
+    };
   };
-
 
   return {
     initialize,
-    getInputs,
     renderProjectsList,
     renderProject,
   };

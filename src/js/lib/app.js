@@ -56,6 +56,8 @@ const app = (() => {
 
   const getProject = ({ id }) => DB[id];
 
+  const getAllProjects = () => Object.keys(DB).map((id) => DB[id]);
+
   const createTodo = ({
     projectId, title, desc, dueDate, priority,
   }) => {
@@ -117,6 +119,7 @@ const app = (() => {
     deleteProject,
     editProject,
     getProject,
+    getAllProjects,
     getDB,
     createTodo,
     deleteTodo,
