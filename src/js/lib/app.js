@@ -7,7 +7,7 @@ const app = (() => {
   let DB = {
     1: {
       id: 1,
-      name: 'Demo Project!',
+      name: 'welcome!',
       todos: {
         1: {
           id: 1,
@@ -24,8 +24,6 @@ const app = (() => {
     DB = storage.fetch() || DB;
     storage.store(DB);
   };
-
-  const getDB = () => DB;
 
   const createProject = ({ name }) => {
     const id = idGenerator();
@@ -56,7 +54,7 @@ const app = (() => {
 
   const getProject = ({ id }) => DB[id];
 
-  const getAllProjects = () => Object.keys(DB).map((id) => DB[id]);
+  const getAll = () => Object.keys(DB).map((id) => DB[id]);
 
   const createTodo = ({
     projectId, title, desc, dueDate, priority,
@@ -119,8 +117,7 @@ const app = (() => {
     deleteProject,
     editProject,
     getProject,
-    getAllProjects,
-    getDB,
+    getAll,
     createTodo,
     deleteTodo,
     editTodo,

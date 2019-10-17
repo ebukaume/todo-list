@@ -21,7 +21,7 @@ const UI = (() => {
       </div>
       <button id="submit" class="red accent-4 modal-action btn waves-effect waves-light" type="submit"
         name="action">
-        Submit
+        Save
       </button>
     </form>
   </div>
@@ -48,24 +48,23 @@ const UI = (() => {
     </ul>
     <div class="todos-area">
     <table>
-    <thead >
-    <div id="project-header">
-        <h5>Project Name</h5>
-        <div class="divider"></div>
+      <thead >
+        <div id="project-header">
         </div>
+        <div class="divider"></div>
       </thead>
       <tbody id="project-todos">
       </tbody>
-      </table>
-      <ul class="todo-row">
-        <li id="add-todo-btn">
-          <a class="modal-trigger" href="#create-todo-form-modal">
-            Add Project
-            <i class="material-icons left red-text">add</i>
-          </a>
-        </li>
-      </ul>
-    </div>
+    </table>
+    <ul class="todo-row">
+      <li id="add-todo-btn">
+        <a class="modal-trigger" href="#create-todo-form-modal">
+          Add Todo Item
+          <i class="material-icons left red-text">add</i>
+        </a>
+      </li>
+    </ul>
+  </div>
   </div>
 </main>
   `;
@@ -74,49 +73,58 @@ const UI = (() => {
   let createProjectForm;
   let projectsList;
   let projectHeader;
+  let projectTodos;
 
-  // const renderTodos = ({ todos }) => {
-  //   let html = '';
-  //   Object.keys(todos).forEach((todoID) => {
-  //     const todo = todos[todoID];
-  //     html += `
-  //     <div class="todo-row">
-  //     <tr>
-  //     <td>
-  //     <label>
-  //     <input type="checkbox" />
-  //     <span>${todo.title}</span>
-  //     </label>
-  //     </td>
-  //     </tr>
-  //     <tr class="edit ">
-  //     <td>
-  //     <label>
-  //     <input type="checkbox" />
-  //     <span>${todo.title}</span>
-  //     </label>
-  //     </td>
-  //     </tr>
-  //     </div>
-  //     `;
-  //   });
-  //   projectTodos.innerHTML = html;
-  // };
+  const renderTodos = ({ todosHash }) => {
+    let html = '';
+    const todos = Object.keys(todosHash).map((id) => todosHash[id]);
+    todos.forEach((todo) => {
+      html += `
+      <div class="todo-row">
+      <tr>
+      <td>
+      <label>
+      <input type="checkbox" />
+      <span>${todo.title}</span>
+      </label>
+      </td>
+      </tr>
+      <tr class="edit hide">
+      <td>
+      <label>
+      <input type="checkbox" />
+      <span>${todo.title}</span>
+      </label>
+      </td>
+      </tr>
+      </div>
+      `;
+    });
+    projectTodos.innerHTML = html;
+  };
 
   const renderProject = ({ project }) => {
     const html = `
-    <h5>${project.name}
-    <a href="#!" id="project-delete-btn"
-      data-id="${project.id}"
-      <i class="material-icons right grey-text " >
-      delete
-      </i>
-      </a>
-    </h5>
-    <div class="divider"></div>
+    <div>
+      <h5 id="project-name" class="base" >${project.name}
+        <i id="project-delete-btn" data-id="${project.id}" 
+          class="material-icons right grey-text">
+          delete
+        </i>
+      </h5>
+      
+      <div class="edit">
+        <input value="${project.name}" id="first_name" 
+        type="text" class="validate">
+        <button id="submit-project-edit" data-id="${project.id}" name="action"
+        class="red accent-4 modal-action btn waves-effect waves-light" type="submit">
+          Save
+        </button>
+      </div>
+    </div>
     `;
     projectHeader.innerHTML = html;
-    // renderTodos({ todos });
+    renderTodos({ todosHash: project.todos });
   };
 
   const renderProjectsList = ({ projects }) => {
@@ -137,6 +145,7 @@ const UI = (() => {
     createProjectForm = document.getElementById('create-project-form');
     projectsList = document.getElementById('projects-list');
     projectHeader = document.getElementById('project-header');
+    projectTodos = document.getElementById('project-todos');
   };
 
   const renderAll = ({ projects, project }) => {

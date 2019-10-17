@@ -90,6 +90,38 @@ main {
       height: 48px;
       font-weight: bold;
       text-transform: capitalize;
+
+      display: grid;
+
+      i {
+        cursor: pointer;
+      }
+    }
+
+    .edit {
+      display: none;
+    }
+
+    .show-edit {
+      display: grid;
+      align-content: end;
+      .base {
+        display: none;
+      }
+      .edit {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: auto 120px;
+        input {
+          margin-bottom: 0;
+          height: 36px;
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .divider {
+      margin-top: 8px;
     }
   }
 }
