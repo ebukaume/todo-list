@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-
 const UI = (() => {
   const renderStaticHtml = () => {
     document.getElementById('content').innerHTML = `
@@ -102,8 +100,8 @@ const UI = (() => {
       const { id } = todo;
       const checked = todo.isDone ? 'checked="checked"' : '';
       const priority = todo.priority === '1' ? 'red-text' : '';
-      const dueDate = todo.dueDate || '';
-      const formattedDate = format(new Date(123123), 'iiii');
+      const dueDateFormatted = todo.dueDateFormatted();
+      console.log('todo: ', dueDateFormatted);
       html += `
         <tr class="hide-inline-form hidden">
           <td>
@@ -115,7 +113,7 @@ const UI = (() => {
             <span class="truncate">${todo.title} </span>
           </td>
           <td>
-              <span>${formattedDate}</span> 
+              <span>${dueDateFormatted}</span> 
               <i class="${priority} tiny material-icons right">flag</i>
               <i data-id="todo-delete-btn" id="${id}" class=" tiny  material-icons right grey-text">
                 delete

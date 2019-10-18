@@ -11,15 +11,16 @@ const DB = (() => {
       id: 1,
       name: 'welcome!',
       todos: {
-        2: { id: 2, title: 'grocery' },
+        2: { id: 2, title: 'grocery', dueDate: 1569963600000 },
       },
     },
   };
 
-  const createProject = ({ name }) => {
-    const id = idGenerator();
+  const createProject = ({ id, name }) => {
+    if (db[id]) return false;
+
     const newProject = project({
-      id,
+      id: id || idGenerator(),
       name,
     });
 
@@ -123,12 +124,11 @@ const DB = (() => {
   const createFromHash = (storageFetch) => {
     Object.keys(storageFetch).forEach((projectId) => {
       const project = storageFetch[projectId];
-      projectId = createProject({ name: project.name }).id;
+      createProject({ id: projectId, name: project.name });
 
       Object.keys(project.todos).forEach((todoId) => {
         const todo = project.todos[todoId];
-
-        createTodo({ projectId, title: todo.title });
+        createTodo({ projectId, ...todo });
       });
     });
   };

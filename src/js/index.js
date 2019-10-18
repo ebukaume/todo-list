@@ -47,4 +47,4 @@ const projectAreaHanlder = (e) => {
 projectArea.addEventListener('click', projectAreaHanlder);
 projectArea.addEventListener('submit', projectAreaHanlder);
 
-console.log(DB.getAll());
+console.log('database:', DB.getAll());
