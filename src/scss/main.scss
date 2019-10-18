@@ -35,9 +35,9 @@ input:-internal-autofill-selected {
   background-color: #f44336;
 }
 
-.checkbox-red[type="checkbox"].filled-in:not(:checked)+span{
-  &.red-text{
-    &::after{
+.checkbox-red[type='checkbox'].filled-in:not(:checked) + span {
+  &.red-text {
+    &::after {
       border: 1px solid #f44336;
     }
   }
@@ -121,8 +121,7 @@ main {
     background-color: #1f1f1f;
 
     form {
-      .btn {
-        margin-left: 1rem;
+      .btn, .btn-flat  {
         font-size: 0.75rem;
       }
     }
@@ -195,6 +194,10 @@ main {
         i {
           cursor: pointer;
         }
+
+        span.badge.new:after {
+          content: '';
+        }
       }
     }
 
@@ -214,6 +217,9 @@ main {
         .row {
           display: grid;
           grid-template-columns: auto 150px;
+        }
+        .row,
+        .row2 {
           margin: 0;
 
           input {

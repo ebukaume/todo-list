@@ -49,15 +49,18 @@ const DB = (() => {
   const getAll = () => Object.keys(db).map((id) => db[id]);
 
   const createTodo = ({
-    projectId, title, desc, dueDate, priority,
+    projectId, id, title, desc, dueDate, priority, isDone,
   }) => {
+    if (db[projectId].todos[id]) return false;
+
     if (db[projectId]) {
       const newTodo = todo({
-        id: idGenerator(),
+        id: id || idGenerator(),
         title,
         desc,
         dueDate,
         priority,
+        isDone,
       });
       db[projectId].todos[newTodo.id] = newTodo;
       storage.store(db);
@@ -98,25 +101,23 @@ const DB = (() => {
   };
 
   const toggleTodoStatus = ({ projectId, todoId }) => {
-    const targetProject = db[projectId];
+    const targetTodo = db[projectId].todos[todoId];
 
-    if (targetProject) {
-      targetProject.todos[todoId].isDone = targetProject.todos[todoId].isDone === false;
+    if (targetTodo) {
+      targetTodo.isDone = !targetTodo.isDone;
       storage.store(db);
 
-      return targetProject;
+      return targetTodo;
     }
     return false;
   };
 
-  const editTodoPriority = ({ projectId, todoId, priority }) => {
-    const targetProject = db[projectId];
-
-    if (targetProject) {
-      targetProject.todos[todoId].priority = priority;
+  const toggleTodoPriority = ({ projectId, todoId }) => {
+    const targetTodo = db[projectId].todos[todoId];
+    if (targetTodo) {
+      targetTodo.priority = targetTodo.priority === '1' ? '2' : '1';
       storage.store(db);
-
-      return targetProject;
+      return targetTodo;
     }
     return false;
   };
@@ -154,7 +155,7 @@ const DB = (() => {
     deleteTodo,
     editTodo,
     toggleTodoStatus,
-    editTodoPriority,
+    toggleTodoPriority,
   };
 })();
 

@@ -76,6 +76,20 @@ const app = (() => {
     });
   };
 
+  const toggleTodoStatus = ({ projectId, todoId }) => {
+    DB.toggleTodoStatus({ projectId, todoId });
+    UI.renderProject({
+      project: DB.getProject({ id: projectId }),
+    });
+  };
+
+  const toggleTodoPriority = ({ projectId, todoId }) => {
+    DB.toggleTodoPriority({ projectId, todoId });
+    UI.renderProject({
+      project: DB.getProject({ id: projectId }),
+    });
+  };
+
   return {
     initialize,
     createProject,
@@ -84,6 +98,8 @@ const app = (() => {
     switchToProject,
     createTodo,
     deleteTodo,
+    toggleTodoStatus,
+    toggleTodoPriority,
   };
 })();
 

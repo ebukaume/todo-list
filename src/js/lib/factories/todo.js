@@ -1,24 +1,32 @@
 import { isAfter, formatDistance } from 'date-fns';
 
 const todo = ({
-  id, title, desc, dueDate, priority,
-}) => ({
   id,
   title,
-  desc: desc || 'No Description',
+  desc = 'No Description',
   dueDate,
-  priority: priority || '2',
-  isDone: false,
-  dueDateFormatted() {
+  priority = '2',
+  isDone = false,
+}) => {
+  const dueDateFormatted = () => {
     if (dueDate) {
-      console.log('duedate: ', dueDate);
       return `Due in ${formatDistance(new Date(dueDate), new Date())}`;
     }
     return '';
-  },
-  isPassed() {
-    return isAfter(new Date(), dueDate);
-  },
-});
+  };
+
+  const isPassed = () => isAfter(new Date(), dueDate);
+
+  return {
+    id,
+    desc,
+    title,
+    dueDate,
+    isDone,
+    priority,
+    dueDateFormatted,
+    isPassed,
+  };
+};
 
 export default todo;

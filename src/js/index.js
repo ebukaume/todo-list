@@ -37,10 +37,13 @@ const projectAreaHanlder = (e) => {
       title: target.children[0].children[0].value,
       dueDate: new Date(target.children[0].children[2].value).getTime(),
       desc: target.children[1].children[0].value,
-      priority: target.children[1].children[1].value,
     });
   } else if (target.getAttribute('data-id') === 'todo-delete-btn') {
     App.deleteTodo({ projectId, todoId: target.id });
+  } else if (target.getAttribute('data-id') === 'todo-flag') {
+    App.toggleTodoPriority({ projectId, todoId: target.id });
+  } else if (target.type === 'checkbox') {
+    App.toggleTodoStatus({ projectId, todoId: target.id });
   }
 };
 
