@@ -140,8 +140,8 @@ const UI = (() => {
                   </h5>
 
                   <div class="edit">
-                    <input value="${projectName}" id="first_name" type="text" required="" aria-required="true"
-                      class="validate">
+                    <input value="${projectName}" id="first_name" type="text" autofocus
+                    required="" aria-required="true" class="validate">
                     <div>
                       <button id="submit-project-edit" name="action"
                         class="right red accent-4 modal-action btn waves-effect waves-light" type="submit">
@@ -193,6 +193,13 @@ const UI = (() => {
       } else if (target.id === 'add-todo-btn') {
         target.parentNode.children[1].classList.toggle('hide');
       }
+    });
+
+    projectArea.addEventListener('focusout', (e) => {
+      const { target } = e;
+      Array.from(document.querySelectorAll('.show-edit')).forEach((node) => {
+        node.classList.remove('show-edit');
+      });
     });
   };
 
