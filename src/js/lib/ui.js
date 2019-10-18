@@ -64,7 +64,7 @@ const UI = (() => {
         </a>
         <form id="add-todo-form" class="inline-form">
           <div class="row">
-            <input placeholder="Title" type="text" autofocus required="" aria-required="true" class="validate">
+            <input placeholder="Title" type="text"  required="" aria-required="true" class="validate">
           </div>
           <div class="row">
           <input placeholder="Description" type="text"  class="validate">
@@ -99,7 +99,7 @@ const UI = (() => {
     let html = '';
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
     todos.forEach((todo) => {
-      const {id} = todo;
+      const { id } = todo;
       const checked = todo.isDone ? 'checked="checked"' : '';
       const priority = todo.priority === '1' ? 'red-text' : '';
       html += `
@@ -113,6 +113,7 @@ const UI = (() => {
           </td>
           <td>
               <i class="${priority} tiny material-icons right">flag</i>
+
               <i data-id="todo-delete-btn" id="${id}" class=" tiny  material-icons right grey-text">
                 delete
               </i>
@@ -141,7 +142,7 @@ const UI = (() => {
 
                   <div class="inline-form">
                     <form id="edit-header-form" >
-                      <input value="${projectName}" type="text" autofocus required="" aria-required="true" class="validate">
+                      <input value="${projectName}" type="text" required="" aria-required="true" class="validate">
                       <div>
                         <button id="submit" class="right red accent-4 modal-action btn waves-effect waves-light" type="submit"
                           name="action">
@@ -213,6 +214,9 @@ const UI = (() => {
       path,
       className: 'hide-inline-form',
     }).classList.remove('hidden');
+    Array.from(document.getElementsByTagName('form')).forEach((form) => {
+      if (form.offsetParent) { form.elements[0].focus(); }
+    });
   };
 
   const addStaticEventListeners = () => {

@@ -20,7 +20,7 @@ body {
 input {
   border-bottom: none !important;
   box-shadow: none !important;
-  &::placeholder{
+  &::placeholder {
     color: gray;
   }
 }
@@ -170,8 +170,12 @@ main {
       justify-content: space-between;
       td {
         display: flex;
-        justify-content: right;
+        align-items: center;
 
+        label {
+          height: 22px;
+        }
+        
         i {
           cursor: pointer;
         }
