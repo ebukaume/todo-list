@@ -7,7 +7,7 @@ const todo = ({
   title,
   desc: desc || 'No Description',
   dueDate,
-  priority: priority || 2,
+  priority: priority || '2',
   isDone: false,
   isPassed() {
     return isAfter(new Date(), dueDate);

@@ -26,28 +26,21 @@ const projectAreaHanlder = (e) => {
   const projectId = projectArea.children[0].children[0].getAttribute('data-id');
   if (target.id === 'project-delete-btn') {
     App.deleteProject({ projectId });
-  } else if (target.id === 'submit-project-edit') {
-    const projectName = target.parentNode.parentNode.children[0].value;
-    App.editProject({ projectId, projectName });
-  } else if (target.id === 'add-todo-form') {
-    const title = target.children[0].children[0].value;
-    const desc = target.children[1].children[0].value;
-    const priority = target.children[2].children[0].value;
-    const dueDate = new Date(target.children[2].children[2].value);
-
-    App.createTodo({
-      projectId,
-      title,
-      desc,
-      dueDate,
-      priority,
-    });
-    UI.hideAllInlineFroms();
   } else if (target.id === 'edit-header-form') {
     e.preventDefault();
     const projectName = target.children[0].value;
     App.editProject({ projectId, projectName });
     UI.hideAllInlineFroms();
+  } else if (target.id === 'add-todo-form') {
+    App.createTodo({
+      projectId,
+      title: target.children[0].children[0].value,
+      desc: target.children[1].children[0].value,
+      dueDate: new Date(target.children[2].children[2].value),
+      priority: target.children[2].children[0].value,
+    });
+  } else if (target.getAttribute('data-id') === 'todo-delete-btn') {
+    App.deleteTodo({ projectId, todoId: target.id });
   }
 };
 

@@ -20,6 +20,13 @@ body {
 input {
   border-bottom: none !important;
   box-shadow: none !important;
+  &::placeholder{
+    color: gray;
+  }
+}
+
+input:-internal-autofill-selected {
+  background-color: red !important;
 }
 
 .checkbox-red[type='checkbox'].filled-in:checked + span:not(.lever):after {
@@ -27,7 +34,9 @@ input {
   background-color: #f44336;
 }
 
-.datepicker-date-display, .datepicker-day-button:hover{
+.datepicker-date-display,
+.datepicker-day-button:hover,
+.datepicker-table td.is-selected {
   background-color: #f44336;
 }
 
@@ -142,10 +151,30 @@ main {
         div {
           padding-top: 9px;
         }
-      }
 
-      .divider {
-        margin-top: 8px;
+        input {
+          ::placeholder {
+            color: gray;
+          }
+        }
+      }
+    }
+
+    .divider {
+      margin-top: 8px;
+    }
+
+    tr {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      td {
+        display: flex;
+        justify-content: right;
+
+        i {
+          cursor: pointer;
+        }
       }
     }
 
@@ -157,20 +186,6 @@ main {
     #add-todo-btn {
       height: 35px;
       width: 150px;
-    }
-
-    .todo-form {
-      display: grid;
-      grid-template-columns: 60% 1fr;
-      padding: 0 15px;
-      border: 1px solid rgb(51, 51, 51);
-      background-color: rgb(26, 26, 26);
-      border-radius: 5px;
-      div {
-        display: flex;
-        align-items: center;
-        height: 40px;
-      }
     }
 
     #add-todo {

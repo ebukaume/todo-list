@@ -14,7 +14,7 @@ const DB = (() => {
           title: 'new todo',
           desc: 'No Description',
           dueDate: '',
-          priority: '',
+          priority: '2',
         },
       },
     },

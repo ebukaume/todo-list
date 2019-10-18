@@ -16,7 +16,7 @@ const UI = (() => {
       <h6 class="bold">Add project</h6>
       <div class="input-field">
       <label>Project name</label>
-        <input type="text" name="title" id="title" class="validate"
+        <input type="text" name="title" id="title" class="validate" autocomplete="off"
           required="" aria-required="true">
       </div>
       <button id="submit" class="red accent-4 modal-action btn waves-effect waves-light" type="submit"
@@ -67,7 +67,7 @@ const UI = (() => {
             <input placeholder="Title" type="text" autofocus required="" aria-required="true" class="validate">
           </div>
           <div class="row">
-          <input placeholder="Description" type="text" required="" aria-required="true" class="validate">
+          <input placeholder="Description" type="text"  class="validate">
           </div>
           <div class="row date">
             <input placeholder="Priority" min="1" max="2" type="number" class="validate">
@@ -99,20 +99,25 @@ const UI = (() => {
     let html = '';
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
     todos.forEach((todo) => {
+      const {id} = todo;
       const checked = todo.isDone ? 'checked="checked"' : '';
+      const priority = todo.priority === '1' ? 'red-text' : '';
       html += `
-        <tr class="todo-row show-edit">
+        <tr class="hide-inline-form hidden">
           <td>
             <label>
             <input type="checkbox" class="filled-in checkbox-red"
-             ${checked} />
-              <span>${todo.title}</span>
+             ${checked} /><span></span>
             </label>
+            <span class="truncate">${todo.title} </span>
           </td>
           <td>
-            ${todo.desc}
+              <i class="${priority} tiny material-icons right">flag</i>
+              <i data-id="todo-delete-btn" id="${id}" class=" tiny  material-icons right grey-text">
+                delete
+              </i>
           </td>
-          <td class="edit todo-form">
+          <td class="inline-form">
             asdas
           </td>
       </tr>
@@ -129,7 +134,7 @@ const UI = (() => {
                 <div id="projectId" data-id="${projectId}" class="hide"></div>
                 <div class="hide-inline-form hidden">
                   <h5 id="project-name" class="base">${projectName}
-                    <i id="project-delete-btn" class="material-icons right grey-text">
+                    <i id="project-delete-btn" class=" material-icons right grey-text">
                       delete
                     </i>
                   </h5>
@@ -188,11 +193,9 @@ const UI = (() => {
         node.classList.add('hidden');
       },
     );
-    Array.from(document.getElementsByTagName('form')).forEach(
-      (form) => {
-        form.reset();
-      },
-    );
+    Array.from(document.getElementsByTagName('form')).forEach((form) => {
+      form.reset();
+    });
   };
 
   const findInEventPath = ({ path, className }) => {
@@ -209,9 +212,7 @@ const UI = (() => {
     findInEventPath({
       path,
       className: 'hide-inline-form',
-    }).classList.remove(
-      'hidden',
-    );
+    }).classList.remove('hidden');
   };
 
   const addStaticEventListeners = () => {
