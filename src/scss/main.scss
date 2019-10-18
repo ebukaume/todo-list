@@ -17,6 +17,20 @@ body {
   font-weight: bold;
 }
 
+input {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+.checkbox-red[type='checkbox'].filled-in:checked + span:not(.lever):after {
+  border: 2px solid #f44336;
+  background-color: #f44336;
+}
+
+.datepicker-date-display, .datepicker-day-button:hover{
+  background-color: #f44336;
+}
+
 .navbar-fixed {
   position: fixed;
   height: 3rem;
@@ -91,7 +105,7 @@ main {
     form {
       .btn {
         margin-left: 1rem;
-        font-size: .75rem;
+        font-size: 0.75rem;
       }
     }
 
@@ -125,7 +139,7 @@ main {
         grid-template-columns: auto 200px;
         height: 45px;
 
-        div{
+        div {
           padding-top: 9px;
         }
       }
@@ -133,9 +147,7 @@ main {
       .divider {
         margin-top: 8px;
       }
-  
     }
-    
 
     .modal {
       background: $base-color;
@@ -184,7 +196,6 @@ main {
             }
           }
         }
-
       }
     }
   }

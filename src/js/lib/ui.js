@@ -99,19 +99,18 @@ const UI = (() => {
     let html = '';
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
     todos.forEach((todo) => {
+      const checked = todo.isDone ? 'checked="checked"' : '';
       html += `
         <tr class="todo-row show-edit">
           <td>
             <label>
-              <input type="checkbox" />
+            <input type="checkbox" class="filled-in checkbox-red"
+             ${checked} />
               <span>${todo.title}</span>
             </label>
           </td>
           <td>
-            <label>
-              <input type="checkbox" />
-              <span>${todo.title}</span>
-            </label>
+            ${todo.desc}
           </td>
           <td class="edit todo-form">
             asdas
