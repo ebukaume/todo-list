@@ -62,7 +62,7 @@ const UI = (() => {
           Add Todo Item
           <i class="material-icons left red-text">add</i>
         </a>
-        <form id="add-todo-form" class="">
+        <form id="add-todo-form" class="hide">
           <div class="row">
             <input placeholder="Title" type="text" required="" aria-required="true" class="validate">
           </div>
@@ -182,10 +182,25 @@ const UI = (() => {
     renderProject({ project: project || projects[0] });
   };
 
+  const addStaticEventListeners = () => {
+    document.getElementById('content').addEventListener('click', (e) => {
+      const { target } = e;
+      if (target.id === 'project-name') {
+        target.parentNode.classList.toggle('show-edit');
+      } else if (target.getAttribute('data-id') === 'cancel') {
+        target.parentNode.classList.toggle('hide');
+        target.parentNode.reset();
+      } else if (target.id === 'add-todo-btn') {
+        target.parentNode.children[1].classList.toggle('hide');
+      }
+    });
+  };
+
   const initialize = ({ projects }) => {
     renderStaticHtml();
     updateDomElements();
     renderAll({ projects });
+    addStaticEventListeners();
 
     return {
       projectsList,

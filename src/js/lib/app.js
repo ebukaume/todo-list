@@ -9,7 +9,15 @@ const app = (() => {
     });
   };
 
-  const createProject = () => {};
+  const createProject = ({ name }) => {
+    const project = DB.createProject({
+      name,
+    });
+    UI.renderAll({
+      projects: DB.getAll(),
+      project,
+    });
+  };
 
   const deleteProject = ({ projectId }) => {
     DB.deleteProject({
@@ -36,11 +44,40 @@ const app = (() => {
     });
   };
 
+  const switchToProject = ({ projectId }) => {
+    const project = DB.getProject({
+      id: projectId,
+    });
+    UI.renderProject({
+      project,
+    });
+  };
+
+  const createTodo = ({
+    projectId, title, desc, dueDate, priority,
+  }) => {
+    DB.createTodo({
+      projectId,
+      title,
+      desc,
+      dueDate,
+      priority,
+    });
+    UI.renderAll({
+      projects: DB.getAll(),
+      project: DB.getProject({
+        id: projectId,
+      }),
+    });
+  };
+
   return {
     initialize,
     createProject,
     deleteProject,
     editProject,
+    switchToProject,
+    createTodo,
   };
 })();
 
