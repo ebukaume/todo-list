@@ -4,25 +4,16 @@ import todo from './factories/todo';
 import idGenerator from './util/id_generator';
 
 const DB = (() => {
-  let db = {
+  const db = {};
+
+  const demo = {
     1: {
       id: 1,
       name: 'welcome!',
       todos: {
-        1: {
-          id: 1,
-          title: 'new todo',
-          desc: 'No Description',
-          dueDate: '',
-          priority: '2',
-        },
+        2: { id: 2, title: 'grocery' },
       },
     },
-  };
-
-  const initialize = () => {
-    db = storage.fetch() || db;
-    storage.store(db);
   };
 
   const createProject = ({ name }) => {
@@ -69,7 +60,6 @@ const DB = (() => {
       });
       db[projectId].todos[newTodo.id] = newTodo;
       storage.store(db);
-
       return newTodo;
     }
     return false;
@@ -128,6 +118,29 @@ const DB = (() => {
       return targetProject;
     }
     return false;
+  };
+
+  const createFromHash = (storageFetch) => {
+    Object.keys(storageFetch).forEach((projectId) => {
+      const project = storageFetch[projectId];
+      projectId = createProject({ name: project.name }).id;
+
+      Object.keys(project.todos).forEach((todoId) => {
+        const todo = project.todos[todoId];
+
+        createTodo({ projectId, title: todo.title });
+      });
+    });
+  };
+
+  const initialize = () => {
+    const storageFetch = storage.fetch();
+    if (storageFetch && Object.keys(storageFetch).length > 0) {
+      createFromHash(storageFetch);
+    } else {
+      createFromHash(demo);
+    }
+    storage.store(db);
   };
 
   return {

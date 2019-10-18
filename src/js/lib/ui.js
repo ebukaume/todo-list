@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 const UI = (() => {
   const renderStaticHtml = () => {
     document.getElementById('content').innerHTML = `
@@ -101,6 +103,7 @@ const UI = (() => {
       const checked = todo.isDone ? 'checked="checked"' : '';
       const priority = todo.priority === '1' ? 'red-text' : '';
       const dueDate = todo.dueDate || '';
+      const formattedDate = format(new Date(123123), 'iiii');
       html += `
         <tr class="hide-inline-form hidden">
           <td>
@@ -112,7 +115,7 @@ const UI = (() => {
             <span class="truncate">${todo.title} </span>
           </td>
           <td>
-          <span>${dueDate}</span>
+              <span>${formattedDate}</span> 
               <i class="${priority} tiny material-icons right">flag</i>
               <i data-id="todo-delete-btn" id="${id}" class=" tiny  material-icons right grey-text">
                 delete
@@ -215,7 +218,9 @@ const UI = (() => {
       className: 'hide-inline-form',
     }).classList.remove('hidden');
     Array.from(document.getElementsByTagName('form')).forEach((form) => {
-      if (form.offsetParent) { form.elements[0].focus(); }
+      if (form.offsetParent) {
+        form.elements[0].focus();
+      }
     });
   };
 

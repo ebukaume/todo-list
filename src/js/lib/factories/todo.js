@@ -1,4 +1,4 @@
-import { isAfter, format } from 'date-fns';
+import { isAfter } from 'date-fns';
 
 const todo = ({
   id, title, desc, dueDate, priority,
@@ -11,9 +11,6 @@ const todo = ({
   isDone: false,
   isPassed() {
     return isAfter(new Date(), dueDate);
-  },
-  dueDateFormat() {
-    return format(dueDate);
   },
 });
 
