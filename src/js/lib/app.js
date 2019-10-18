@@ -1,114 +1,39 @@
-import storage from './localstorage';
-import project from './factories/project';
-import todo from './factories/todo';
-import idGenerator from './util/id_generator';
+import UI from './ui.js';
+import DB from './db';
 
 const app = (() => {
-  let DB = {
-    1: {
-      id: 1,
-      name: 'welcome!',
-      todos: {
-        1: {
-          id: 1,
-          title: 'new todo',
-          desc: 'No Description',
-          dueDate: '',
-          priority: '',
-        },
-      },
-    },
-  };
-
   const initialize = () => {
-    DB = storage.fetch() || DB;
-    storage.store(DB);
-  };
-
-  const createProject = ({ name }) => {
-    const id = idGenerator();
-    const newProject = project({
-      id,
-      name,
+    DB.initialize();
+    return UI.initialize({
+      projects: DB.getAll(),
     });
-
-    DB[newProject.id] = newProject;
-    storage.store(DB);
-
-    return newProject;
   };
 
-  const deleteProject = ({ id }) => {
-    delete DB[id];
-    storage.store(DB);
+  const createProject = () => {};
 
-    return DB;
-  };
-
-  const editProject = ({ id, name }) => {
-    DB[id].name = name;
-    storage.store(DB);
-
-    return DB;
-  };
-
-  const getProject = ({ id }) => DB[id];
-
-  const getAll = () => Object.keys(DB).map((id) => DB[id]);
-
-  const createTodo = ({
-    projectId, title, desc, dueDate, priority,
-  }) => {
-    if (DB[projectId] === undefined) return false;
-
-    const newTodo = todo({
-      id: idGenerator(),
-      title,
-      desc,
-      dueDate,
-      priority,
+  const deleteProject = ({ projectId }) => {
+    DB.deleteProject({
+      id: projectId,
     });
-    DB[projectId].todos[newTodo.id] = newTodo;
-    storage.store(DB);
-
-    return newTodo;
+    UI.renderAll({
+      projects: DB.getAll(),
+      project: DB.getProject(projectId),
+    });
   };
 
-  const deleteTodo = ({ projectId, todoId }) => {
-    const targetProject = DB[projectId];
-
-    if (targetProject === undefined) return false;
-    delete targetProject.todos[todoId];
-    storage.store(DB);
-
-    return DB;
-  };
-
-  const editTodo = ({
-    projectId, todoId, title, desc, dueDate, priority,
-  }) => {
-    const targetProject = DB[projectId];
-
-    if (targetProject === undefined) return false;
-    const targetTodo = targetProject.todos[todoId];
-
-    if (title) targetTodo.title = title;
-    if (desc) targetTodo.desc = desc;
-    if (dueDate) targetTodo.dueDate = dueDate;
-    if (priority) targetTodo.priority = priority;
-    storage.store(DB);
-
-    return DB;
-  };
-
-  const toggleTodoStatus = ({ projectId, todoId }) => {
-    const targetProject = DB[projectId];
-
-    if (targetProject === undefined) return false;
-    targetProject.todos[todoId].isDone = targetProject.todos[todoId].isDone === false;
-    storage.store(DB);
-
-    return targetProject;
+  const editProject = ({ projectId, projectName }) => {
+    if (projectName) {
+      DB.editProject({
+        id: projectId,
+        name: projectName,
+      });
+    }
+    UI.renderAll({
+      projects: DB.getAll(),
+      project: DB.getProject({
+        id: projectId,
+      }),
+    });
   };
 
   return {
@@ -116,12 +41,6 @@ const app = (() => {
     createProject,
     deleteProject,
     editProject,
-    getProject,
-    getAll,
-    createTodo,
-    deleteTodo,
-    editTodo,
-    toggleTodoStatus,
   };
 })();
 

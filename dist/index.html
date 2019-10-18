@@ -24,7 +24,12 @@
 
     document.addEventListener('DOMContentLoaded', function () {
       var elems = document.querySelectorAll('.modal');
-      var instances = M.Modal.init(elems);
+      M.Modal.init(elems);
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.datepicker');
+      M.Datepicker.init(elems);
     });
   </script>
 </body>

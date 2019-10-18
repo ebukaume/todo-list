@@ -21,7 +21,7 @@ const UI = (() => {
       </div>
       <button id="submit" class="red accent-4 modal-action btn waves-effect waves-light" type="submit"
         name="action">
-        Save
+        Submit
       </button>
     </form>
   </div>
@@ -46,7 +46,7 @@ const UI = (() => {
         </a>
       </li>
     </ul>
-    <div class="todos-area">
+    <div class="todos-area" id="project-area">
     <table>
       <thead >
         <div id="project-header">
@@ -57,11 +57,30 @@ const UI = (() => {
       </tbody>
     </table>
     <ul class="todo-row">
-      <li id="add-todo-btn">
-        <a class="modal-trigger" href="#create-todo-form-modal">
+      <li id="add-todo">
+        <a id="add-todo-btn" href="#!">
           Add Todo Item
           <i class="material-icons left red-text">add</i>
         </a>
+        <form id="add-todo-form" class="">
+          <div class="row">
+            <input placeholder="Title" type="text" required="" aria-required="true" class="validate">
+          </div>
+          <div class="row">
+          <input placeholder="Description" type="text" required="" aria-required="true" class="validate">
+          </div>
+          <div class="row date">
+            <input placeholder="Priority" min="1" max="2" type="number" class="validate">
+            <input type="text" placeholder="Date" class="datepicker">
+          </div>
+          <button id="submit" class="right red accent-4 modal-action btn waves-effect waves-light" type="submit"
+            name="action">
+            Submit
+          </button>
+          <a class="right grey accent-4 modal-action btn waves-effect waves-light" data-id="cancel" name="action">
+            Cancel
+          </a>
+        </form>
       </li>
     </ul>
   </div>
@@ -72,59 +91,68 @@ const UI = (() => {
 
   let createProjectForm;
   let projectsList;
-  let projectHeader;
   let projectTodos;
+  let projectArea;
+  let projectHeader;
 
   const renderTodos = ({ todosHash }) => {
     let html = '';
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
     todos.forEach((todo) => {
       html += `
-      <div class="todo-row">
-      <tr>
-      <td>
-      <label>
-      <input type="checkbox" />
-      <span>${todo.title}</span>
-      </label>
-      </td>
+      <tr class="todo-row show-edit">
+        <td>
+          <label>
+            <input type="checkbox" />
+            <span>${todo.title}</span>
+          </label>
+        </td>
+        <td class="edit todo-form">
+          <div>
+            <input value="${todo.title}" id="first_name" 
+            type="text" class="validate">
+          </div>
+          <div>asd</div>
+        </td>
+        <td>
+          <button id="submit-project-edit" data-id="${todo.id}" name="action"
+            class="red accent-4 modal-action btn waves-effect waves-light" type="submit">
+            Submit
+          </button>
+        </td>
       </tr>
-      <tr class="edit hide">
-      <td>
-      <label>
-      <input type="checkbox" />
-      <span>${todo.title}</span>
-      </label>
-      </td>
-      </tr>
-      </div>
       `;
     });
     projectTodos.innerHTML = html;
   };
 
   const renderProject = ({ project }) => {
+    const projectName = project.name;
+    const projectId = project.id;
+    const projectTodos = project.todos;
     const html = `
-    <div>
-      <h5 id="project-name" class="base" >${project.name}
-        <i id="project-delete-btn" data-id="${project.id}" 
-          class="material-icons right grey-text">
-          delete
-        </i>
-      </h5>
-      
-      <div class="edit">
-        <input value="${project.name}" id="first_name" 
-        type="text" class="validate">
-        <button id="submit-project-edit" data-id="${project.id}" name="action"
-        class="red accent-4 modal-action btn waves-effect waves-light" type="submit">
-          Save
-        </button>
-      </div>
-    </div>
-    `;
+                <div id="projectId" data-id="${projectId}" class="hide"></div>
+                <div>
+                  <h5 id="project-name" class="base">${projectName}
+                    <i id="project-delete-btn" class="material-icons right grey-text">
+                      delete
+                    </i>
+                  </h5>
+
+                  <div class="edit">
+                    <input value="${projectName}" id="first_name" type="text" required="" aria-required="true"
+                      class="validate">
+                    <div>
+                      <button id="submit-project-edit" name="action"
+                        class="right red accent-4 modal-action btn waves-effect waves-light" type="submit">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+`;
     projectHeader.innerHTML = html;
-    renderTodos({ todosHash: project.todos });
+    renderTodos({ todosHash: projectTodos });
   };
 
   const renderProjectsList = ({ projects }) => {
@@ -144,8 +172,9 @@ const UI = (() => {
   const updateDomElements = () => {
     createProjectForm = document.getElementById('create-project-form');
     projectsList = document.getElementById('projects-list');
-    projectHeader = document.getElementById('project-header');
+    projectArea = document.getElementById('project-area');
     projectTodos = document.getElementById('project-todos');
+    projectHeader = document.getElementById('project-header');
   };
 
   const renderAll = ({ projects, project }) => {
@@ -160,7 +189,8 @@ const UI = (() => {
 
     return {
       projectsList,
-      projectHeader,
+      projectArea,
+      projectTodos,
       createProjectForm,
     };
   };

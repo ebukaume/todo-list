@@ -1,6 +1,8 @@
 $base-color: #282828;
 
 body {
+  background-color: $base-color;
+  min-height: 100vh;
   * {
     color: rgba(255, 255, 255, 0.87) !important;
   }
@@ -49,7 +51,7 @@ main {
     position: relative;
 
     .sidenav {
-      height: 100vh;
+      height: 100%;
       background: $base-color;
       padding-top: 75px;
       box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14), 0 3px 0 0 rgba(0, 0, 0, 0.12),
@@ -80,10 +82,11 @@ main {
   }
 
   .todos-area {
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     width: 100%;
-    padding: 30px;
-    padding-top: 75px;
+    padding: 75px 30px;
+
     background-color: #1f1f1f;
 
     #project-header {
@@ -96,6 +99,11 @@ main {
       i {
         cursor: pointer;
       }
+    }
+
+    .modal {
+      background: $base-color;
+      max-width: 1200px;
     }
 
     .edit {
@@ -111,17 +119,74 @@ main {
       .edit {
         display: grid;
         grid-gap: 20px;
-        grid-template-columns: auto 120px;
+        grid-template-columns: auto 180px;
         input {
           margin-bottom: 0;
           height: 36px;
-          font-size: 1.5rem;
+          border: none;
+          &:focus {
+            border: none;
+          }
         }
+      }
+    }
+
+    #add-todo-btn {
+      display: block;
+      height: 35px;
+      width: 150px;
+    }
+
+    .todo-form {
+      display: grid;
+      grid-template-columns: 60% 1fr;
+      padding: 0 15px;
+      border: 1px solid rgb(51, 51, 51);
+      background-color: rgb(26, 26, 26);
+      border-radius: 5px;
+      div {
+        display: flex;
+        align-items: center;
+        height: 40px;
       }
     }
 
     .divider {
       margin-top: 8px;
+    }
+
+    #add-todo {
+      form {
+        margin-top: 1rem;
+        .row {
+          height: 45px;
+          width: 100%;
+          background-color: #1a1a1a;
+          border-radius: 3px;
+          border: 1px solid #333333;
+          padding-left: 1rem;
+          margin-bottom: 0.5rem;
+
+          &.date {
+            display: grid;
+            grid-gap: 1rem;
+            grid-template-columns: 1fr 1fr;
+            .datepicker {
+              width: 100%;
+              border-left: 1px solid #333333;
+              padding-left: 1rem;
+            }
+          }
+        }
+        input,
+        textarea {
+          border: none;
+        }
+
+        button {
+          margin-left: 1rem;
+        }
+      }
     }
   }
 }
