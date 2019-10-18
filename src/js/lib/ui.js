@@ -104,26 +104,44 @@ const UI = (() => {
         ? `<span class="new red badge">${dueDateFormatted}</span>`
         : '';
       html += `
-        <tr class="hide-inline-form hidden">
-          <td>
-            <label >
-            <input id="${id}" type="checkbox" class="filled-in checkbox-red"
-             ${checked} />
-             <span class="${priority}" ></span>
-            </label>
-            <span class="truncate">${todo.title} </span>
-          </td>
-          <td>
-              ${dateBadge}
-              <i data-id="todo-flag" id="${id}" class="${priority} tiny material-icons right">flag</i>
-              <i data-id="todo-delete-btn" id="${id}" class=" tiny  material-icons right grey-text">
-                delete
-              </i>
-          </td>
-          <td class="inline-form">
-            asdas
-          </td>
-      </tr>
+        <div id="todos-row" class="hide-inline-form hidden ">
+          <div class="base">
+            <div >
+              <label >
+              <input id="${id}" type="checkbox" class="filled-in checkbox-red"
+              ${checked} />
+              <span class="${priority}" ></span>
+              </label>
+              <span class="truncate">${todo.title} </span>
+            </div>
+            <div >
+                ${dateBadge}
+                <i data-id="todo-flag" id="${id}" class="${priority} tiny material-icons right">flag</i>
+                <i data-id="todo-delete-btn" id="${id}" class=" tiny  material-icons right grey-text">
+                  delete
+                </i>
+            </div>
+          </div>
+          <div class="inline-form">
+            <form data-id="${id}" class="edit-todo-form">
+              <div class="row">
+                <input value="${todo.title}" type="text"  required="" aria-required="true" class="validate">
+                <input type="text" value="${dueDateFormatted}"  class="datepicker">
+              </div>
+              <div class="row2">
+                <input value="${todo.desc}" type="text"  required="" aria-required="true" class="validate">
+              </div>
+              <div class="row3">
+                <button id="submit" class="left red accent-4 btn waves-effect waves-light" type="submit" name="action">
+                  Submit
+                </button>
+                <a class="left btn-flat waves-effect waves-light" data-id="cancel" name="action">
+                  Cancel
+                </a>
+              </div>
+            </form>
+          </div>
+      </div>
       `;
     });
     projectTodos.innerHTML = html;
@@ -216,6 +234,7 @@ const UI = (() => {
       path,
       className: 'hide-inline-form',
     }).classList.remove('hidden');
+
     Array.from(document.getElementsByTagName('form')).forEach((form) => {
       if (form.offsetParent) {
         form.elements[0].focus();
@@ -227,8 +246,11 @@ const UI = (() => {
     document.getElementById('content').addEventListener('click', (e) => {
       const { target } = e;
       const { path } = e;
-
-      if (target.id === 'project-name' || target.id === 'add-todo-btn') {
+      if (
+        target.id === 'project-name'
+        || target.id === 'add-todo-btn'
+        || target.className === 'base'
+      ) {
         showInlineForm({ path });
       } else if (target.getAttribute('data-id') === 'cancel') {
         hideAllInlineFroms();

@@ -11,7 +11,9 @@ const DB = (() => {
       id: 1,
       name: 'welcome!',
       todos: {
-        2: { id: 2, title: 'grocery', dueDate: 1569963600000 },
+        2: {
+          id: 2, title: 'Kill me', desc: 'This is unhealthy', dueDate: 1569963600000,
+        },
       },
     },
   };
