@@ -28,7 +28,7 @@ const UI = (() => {
 </div>
 <main>
   <div class="max-width">
-    <ul id="nav-mobile projects-side-nav" class="sidenav sidenav-fixed ">
+    <ul id="nav-mobile" class="sidenav sidenav-fixed ">
       <li>
         <a class=" modal-trigger" href="#create-project-form-modal">
           <i class="material-icons">view_module</i>
@@ -49,7 +49,7 @@ const UI = (() => {
     <div class="todos-area" id="project-area">
     <table>
       <thead >
-        <div id="project-header">
+        <div id="project-header" >
         </div>
         <div class="divider"></div>
       </thead>
@@ -57,14 +57,14 @@ const UI = (() => {
       </tbody>
     </table>
     <ul class="todo-row">
-      <li id="add-todo">
-        <a id="add-todo-btn" href="#!">
+      <li id="add-todo" class="hide-inline-form hidden">
+        <a id="add-todo-btn" href="#!" class="base">
           Add Todo Item
           <i class="material-icons left red-text">add</i>
         </a>
-        <form id="add-todo-form" class="hide">
+        <form id="add-todo-form" class="inline-form">
           <div class="row">
-            <input placeholder="Title" type="text" required="" aria-required="true" class="validate">
+            <input placeholder="Title" type="text" autofocus required="" aria-required="true" class="validate">
           </div>
           <div class="row">
           <input placeholder="Description" type="text" required="" aria-required="true" class="validate">
@@ -100,26 +100,22 @@ const UI = (() => {
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
     todos.forEach((todo) => {
       html += `
-      <tr class="todo-row show-edit">
-        <td>
-          <label>
-            <input type="checkbox" />
-            <span>${todo.title}</span>
-          </label>
-        </td>
-        <td class="edit todo-form">
-          <div>
-            <input value="${todo.title}" id="first_name" 
-            type="text" class="validate">
-          </div>
-          <div>asd</div>
-        </td>
-        <td>
-          <button id="submit-project-edit" data-id="${todo.id}" name="action"
-            class="red accent-4 modal-action btn waves-effect waves-light" type="submit">
-            Submit
-          </button>
-        </td>
+        <tr class="todo-row show-edit">
+          <td>
+            <label>
+              <input type="checkbox" />
+              <span>${todo.title}</span>
+            </label>
+          </td>
+          <td>
+            <label>
+              <input type="checkbox" />
+              <span>${todo.title}</span>
+            </label>
+          </td>
+          <td class="edit todo-form">
+            asdas
+          </td>
       </tr>
       `;
     });
@@ -132,22 +128,27 @@ const UI = (() => {
     const projectTodos = project.todos;
     const html = `
                 <div id="projectId" data-id="${projectId}" class="hide"></div>
-                <div>
+                <div class="hide-inline-form hidden">
                   <h5 id="project-name" class="base">${projectName}
                     <i id="project-delete-btn" class="material-icons right grey-text">
                       delete
                     </i>
                   </h5>
 
-                  <div class="edit">
-                    <input value="${projectName}" id="first_name" type="text" autofocus
-                    required="" aria-required="true" class="validate">
-                    <div>
-                      <button id="submit-project-edit" name="action"
-                        class="right red accent-4 modal-action btn waves-effect waves-light" type="submit">
-                        Submit
-                      </button>
-                    </div>
+                  <div class="inline-form">
+                    <form id="edit-header-form" >
+                      <input value="${projectName}" type="text" autofocus required="" aria-required="true" class="validate">
+                      <div>
+                        <button id="submit" class="right red accent-4 modal-action btn waves-effect waves-light" type="submit"
+                          name="action">
+                          Submit
+                        </button>
+                        <button class="right grey accent-4 modal-action btn waves-effect waves-light"
+                         data-id="cancel" type="button" name="action">
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
 `;
@@ -182,24 +183,48 @@ const UI = (() => {
     renderProject({ project: project || projects[0] });
   };
 
+  const hideAllInlineFroms = () => {
+    Array.from(document.getElementsByClassName('hide-inline-form')).forEach(
+      (node) => {
+        node.classList.add('hidden');
+      },
+    );
+    Array.from(document.getElementsByTagName('form')).forEach(
+      (form) => {
+        form.reset();
+      },
+    );
+  };
+
+  const findInEventPath = ({ path, className }) => {
+    let node;
+    path.some((_node) => {
+      node = _node;
+      return Array.from(node.classList).includes(className);
+    });
+    return node;
+  };
+
+  const showInlineForm = ({ path }) => {
+    hideAllInlineFroms();
+    findInEventPath({
+      path,
+      className: 'hide-inline-form',
+    }).classList.remove(
+      'hidden',
+    );
+  };
+
   const addStaticEventListeners = () => {
     document.getElementById('content').addEventListener('click', (e) => {
       const { target } = e;
-      if (target.id === 'project-name') {
-        target.parentNode.classList.toggle('show-edit');
-      } else if (target.getAttribute('data-id') === 'cancel') {
-        target.parentNode.classList.toggle('hide');
-        target.parentNode.reset();
-      } else if (target.id === 'add-todo-btn') {
-        target.parentNode.children[1].classList.toggle('hide');
-      }
-    });
+      const { path } = e;
 
-    projectArea.addEventListener('focusout', (e) => {
-      const { target } = e;
-      Array.from(document.querySelectorAll('.show-edit')).forEach((node) => {
-        node.classList.remove('show-edit');
-      });
+      if (target.id === 'project-name' || target.id === 'add-todo-btn') {
+        showInlineForm({ path });
+      } else if (target.getAttribute('data-id') === 'cancel') {
+        hideAllInlineFroms();
+      }
     });
   };
 
@@ -222,6 +247,7 @@ const UI = (() => {
     renderProjectsList,
     renderProject,
     renderAll,
+    hideAllInlineFroms,
   };
 })();
 

@@ -86,8 +86,28 @@ main {
     height: 100%;
     width: 100%;
     padding: 75px 30px;
-
     background-color: #1f1f1f;
+
+    form {
+      .btn {
+        margin-left: 1rem;
+        font-size: .75rem;
+      }
+    }
+
+    .hide-inline-form {
+      .base {
+        display: none;
+      }
+      &.hidden {
+        .base {
+          display: block;
+        }
+        .inline-form {
+          display: none;
+        }
+      }
+    }
 
     #project-header {
       height: 48px;
@@ -99,40 +119,30 @@ main {
       i {
         cursor: pointer;
       }
+
+      form {
+        display: grid;
+        grid-template-columns: auto 200px;
+        height: 45px;
+
+        div{
+          padding-top: 9px;
+        }
+      }
+
+      .divider {
+        margin-top: 8px;
+      }
+  
     }
+    
 
     .modal {
       background: $base-color;
       max-width: 1200px;
     }
 
-    .edit {
-      display: none;
-    }
-
-    .show-edit {
-      display: grid;
-      align-content: end;
-      .base {
-        display: none;
-      }
-      .edit {
-        display: grid;
-        grid-gap: 20px;
-        grid-template-columns: auto 180px;
-        input {
-          margin-bottom: 0;
-          height: 36px;
-          border: none;
-          &:focus {
-            border: none;
-          }
-        }
-      }
-    }
-
     #add-todo-btn {
-      display: block;
       height: 35px;
       width: 150px;
     }
@@ -149,10 +159,6 @@ main {
         align-items: center;
         height: 40px;
       }
-    }
-
-    .divider {
-      margin-top: 8px;
     }
 
     #add-todo {
@@ -178,14 +184,7 @@ main {
             }
           }
         }
-        input,
-        textarea {
-          border: none;
-        }
 
-        button {
-          margin-left: 1rem;
-        }
       }
     }
   }

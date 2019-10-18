@@ -1,6 +1,7 @@
 import '../scss/main.scss';
 import App from './lib/app';
 import DB from './lib/db';
+import UI from './lib/ui';
 
 const { projectsList, projectArea, createProjectForm } = App.initialize();
 
@@ -41,8 +42,12 @@ const projectAreaHanlder = (e) => {
       dueDate,
       priority,
     });
-    target.classList.toggle('hide');
-    target.reset();
+    UI.hideAllInlineFroms();
+  } else if (target.id === 'edit-header-form') {
+    e.preventDefault();
+    const projectName = target.children[0].value;
+    App.editProject({ projectId, projectName });
+    UI.hideAllInlineFroms();
   }
 };
 
