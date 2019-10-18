@@ -53,7 +53,7 @@ const UI = (() => {
         </div>
         <div class="divider"></div>
       </thead>
-      <tbody id="project-todos">
+      <tbody id="project-todos" class="project-todos">
       </tbody>
     </table>
     <ul class="todo-row">
@@ -65,13 +65,11 @@ const UI = (() => {
         <form id="add-todo-form" class="inline-form">
           <div class="row">
             <input placeholder="Title" type="text"  required="" aria-required="true" class="validate">
+            <input type="text" placeholder="Schedule" class="datepicker">
           </div>
           <div class="row">
-          <input placeholder="Description" type="text"  class="validate">
-          </div>
-          <div class="row date">
+            <input placeholder="Description" type="text"  class="validate">
             <input placeholder="Priority" min="1" max="2" type="number" class="validate">
-            <input type="text" placeholder="Date" class="datepicker">
           </div>
           <button id="submit" class="right red accent-4 modal-action btn waves-effect waves-light" type="submit"
             name="action">
@@ -102,18 +100,20 @@ const UI = (() => {
       const { id } = todo;
       const checked = todo.isDone ? 'checked="checked"' : '';
       const priority = todo.priority === '1' ? 'red-text' : '';
+      const dueDate = todo.dueDate || '';
       html += `
         <tr class="hide-inline-form hidden">
           <td>
-            <label>
+            <label >
             <input type="checkbox" class="filled-in checkbox-red"
-             ${checked} /><span></span>
+             ${checked} />
+             <span class="${priority}" ></span>
             </label>
             <span class="truncate">${todo.title} </span>
           </td>
           <td>
+          <span>${dueDate}</span>
               <i class="${priority} tiny material-icons right">flag</i>
-
               <i data-id="todo-delete-btn" id="${id}" class=" tiny  material-icons right grey-text">
                 delete
               </i>

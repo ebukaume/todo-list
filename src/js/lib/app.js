@@ -63,10 +63,10 @@ const app = (() => {
       dueDate,
       priority,
     });
+    UI.hideAllInlineFroms();
     UI.renderProject({
       project: DB.getProject({ id: projectId }),
     });
-    UI.hideAllInlineFroms();
   };
 
   const deleteTodo = ({ projectId, todoId }) => {

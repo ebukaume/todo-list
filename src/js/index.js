@@ -32,12 +32,13 @@ const projectAreaHanlder = (e) => {
     App.editProject({ projectId, projectName });
     UI.hideAllInlineFroms();
   } else if (target.id === 'add-todo-form') {
+    console.log(target.children[1].children[0].value);
     App.createTodo({
       projectId,
       title: target.children[0].children[0].value,
+      dueDate: new Date(target.children[0].children[2].value),
       desc: target.children[1].children[0].value,
-      dueDate: new Date(target.children[2].children[2].value),
-      priority: target.children[2].children[0].value,
+      priority: target.children[1].children[1].value,
     });
   } else if (target.getAttribute('data-id') === 'todo-delete-btn') {
     App.deleteTodo({ projectId, todoId: target.id });

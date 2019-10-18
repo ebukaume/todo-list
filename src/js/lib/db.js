@@ -109,11 +109,25 @@ const DB = (() => {
   const toggleTodoStatus = ({ projectId, todoId }) => {
     const targetProject = db[projectId];
 
-    if (!targetProject) return false;
-    targetProject.todos[todoId].isDone = targetProject.todos[todoId].isDone === false;
-    storage.store(db);
+    if (targetProject) {
+      targetProject.todos[todoId].isDone = targetProject.todos[todoId].isDone === false;
+      storage.store(db);
 
-    return targetProject;
+      return targetProject;
+    }
+    return false;
+  };
+
+  const editTodoPriority = ({ projectId, todoId, priority }) => {
+    const targetProject = db[projectId];
+
+    if (targetProject) {
+      targetProject.todos[todoId].priority = priority;
+      storage.store(db);
+
+      return targetProject;
+    }
+    return false;
   };
 
   return {
@@ -127,6 +141,7 @@ const DB = (() => {
     deleteTodo,
     editTodo,
     toggleTodoStatus,
+    editTodoPriority,
   };
 })();
 
