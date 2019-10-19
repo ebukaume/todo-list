@@ -47,15 +47,15 @@ const UI = (() => {
       </li>
     </ul>
     <div class="todos-area" id="project-area">
-    <table>
-      <thead >
+    <div>
+      <div >
         <div id="project-header" >
         </div>
         <div class="divider"></div>
-      </thead>
-      <tbody id="project-todos" class="project-todos">
-      </tbody>
-    </table>
+      </div>
+      <div id="project-todos" class="project-todos">
+      </div>
+    </div>
     <ul class="todo-row">
       <li id="add-todo" class="hide-inline-form hidden">
         <a id="add-todo-btn" href="#!" class="base">
@@ -72,7 +72,7 @@ const UI = (() => {
           </div>
           <button id="submit" class="left red accent-4 btn waves-effect waves-light" type="submit"
             name="action">
-            Submit
+            Add todo element
           </button>
           <a class="left btn-flat waves-effect waves-light" data-id="cancel" name="action">
             Cancel
@@ -96,13 +96,14 @@ const UI = (() => {
     let html = '';
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
     todos.forEach((todo) => {
-      const { id } = todo;
+      const { id, title, desc } = todo;
       const checked = todo.isDone ? 'checked="checked"' : '';
       const priority = todo.priority === '1' ? 'red-text' : '';
       const dueDateFormatted = todo.dueDateFormatted();
       const dateBadge = dueDateFormatted
         ? `<span class="new red badge">${dueDateFormatted}</span>`
         : '';
+      const formSchedulePlaceholder = dueDateFormatted || 'schedule';
       html += `
         <div id="todos-row" class="hide-inline-form hidden ">
           <div class="base">
@@ -112,7 +113,7 @@ const UI = (() => {
               ${checked} />
               <span class="${priority}" ></span>
               </label>
-              <span class="truncate">${todo.title} </span>
+              <span class="truncate">${title} </span>
             </div>
             <div >
                 ${dateBadge}
@@ -125,29 +126,66 @@ const UI = (() => {
           <div class="inline-form">
             <form data-id="${id}" class="edit-todo-form">
               <div class="row">
-                <input value="${todo.title}" type="text"  required="" aria-required="true" class="validate">
-                <input type="text" value="${dueDateFormatted}"  class="datepicker">
+                <input value="${title}" type="text" required="" aria-required="true" class="validate">
+                <input type="text" placeholder="${formSchedulePlaceholder}" class="datepicker">
               </div>
               <div class="row2">
-                <input value="${todo.desc}" type="text"  required="" aria-required="true" class="validate">
+                <input value="${desc}"  placeholder="Description" type="text" class="validate truncate">
               </div>
               <div class="row3">
                 <button id="submit" class="left red accent-4 btn waves-effect waves-light" type="submit" name="action">
-                  Submit
+                  Save
                 </button>
                 <a class="left btn-flat waves-effect waves-light" data-id="cancel" name="action">
                   Cancel
                 </a>
               </div>
             </form>
+    
           </div>
-      </div>
+          </div>
+
       `;
     });
     projectTodos.innerHTML = html;
   };
 
+
+  const renderProjectsList = ({ projects }) => {
+    let html = '';
+    projects.forEach((project) => {
+      html += `
+      <li ">
+        <a href="#!" class="project-btn" data-id="${project.id}">
+          ${project.name}
+        </a>
+      </li>
+      `;
+    });
+    projectsList.innerHTML = html;
+  };
+
+  const updateDomElements = () => {
+    createProjectForm = document.getElementById('create-project-form');
+    projectsList = document.getElementById('projects-list');
+    projectArea = document.getElementById('project-area');
+    projectTodos = document.getElementById('project-todos');
+    projectHeader = document.getElementById('project-header');
+  };
+
+  const hideAllInlineFroms = () => {
+    Array.from(document.getElementsByClassName('hide-inline-form')).forEach(
+      (node) => {
+        node.classList.add('hidden');
+      },
+    );
+    Array.from(document.getElementsByTagName('form')).forEach((form) => {
+      form.reset();
+    });
+  };
+
   const renderProject = ({ project }) => {
+    hideAllInlineFroms();
     const projectName = project.name;
     const projectId = project.id;
     const projectTodos = project.todos;
@@ -156,7 +194,7 @@ const UI = (() => {
                 <div class="hide-inline-form hidden">
                   <h5 id="project-name" class="base">${projectName}
                     <i id="project-delete-btn" class=" material-icons right grey-text">
-                      delete
+                      delete  
                     </i>
                   </h5>
 
@@ -181,43 +219,11 @@ const UI = (() => {
     renderTodos({ todosHash: projectTodos });
   };
 
-  const renderProjectsList = ({ projects }) => {
-    let html = '';
-    projects.forEach((project) => {
-      html += `
-      <li ">
-        <a href="#!" class="project-btn" data-id="${project.id}">
-          ${project.name}
-        </a>
-      </li>
-      `;
-    });
-    projectsList.innerHTML = html;
-  };
-
-  const updateDomElements = () => {
-    createProjectForm = document.getElementById('create-project-form');
-    projectsList = document.getElementById('projects-list');
-    projectArea = document.getElementById('project-area');
-    projectTodos = document.getElementById('project-todos');
-    projectHeader = document.getElementById('project-header');
-  };
-
   const renderAll = ({ projects, project }) => {
     renderProjectsList({ projects });
     renderProject({ project: project || projects[0] });
   };
 
-  const hideAllInlineFroms = () => {
-    Array.from(document.getElementsByClassName('hide-inline-form')).forEach(
-      (node) => {
-        node.classList.add('hidden');
-      },
-    );
-    Array.from(document.getElementsByTagName('form')).forEach((form) => {
-      form.reset();
-    });
-  };
 
   const findInEventPath = ({ path, className }) => {
     let node;
@@ -250,6 +256,8 @@ const UI = (() => {
         target.id === 'project-name'
         || target.id === 'add-todo-btn'
         || target.className === 'base'
+        || target.className === 'truncate'
+        || target.className === 'new red badge'
       ) {
         showInlineForm({ path });
       } else if (target.getAttribute('data-id') === 'cancel') {

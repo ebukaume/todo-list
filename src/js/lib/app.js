@@ -63,7 +63,6 @@ const app = (() => {
       dueDate,
       priority,
     });
-    UI.hideAllInlineFroms();
     UI.renderProject({
       project: DB.getProject({ id: projectId }),
     });
@@ -90,6 +89,21 @@ const app = (() => {
     });
   };
 
+  const editTodo = ({
+    projectId, todoId, title, desc, dueDate,
+  }) => {
+    DB.editTodo({
+      projectId,
+      todoId,
+      title,
+      dueDate,
+      desc,
+    });
+    UI.renderProject({
+      project: DB.getProject({ id: projectId }),
+    });
+  };
+
   return {
     initialize,
     createProject,
@@ -100,6 +114,7 @@ const app = (() => {
     deleteTodo,
     toggleTodoStatus,
     toggleTodoPriority,
+    editTodo,
   };
 })();
 

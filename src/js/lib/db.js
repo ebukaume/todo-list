@@ -12,7 +12,10 @@ const DB = (() => {
       name: 'welcome!',
       todos: {
         2: {
-          id: 2, title: 'Kill me', desc: 'This is unhealthy', dueDate: 1569963600000,
+          id: 2,
+          title: 'Kill me',
+          desc: 'This is unhealthy',
+          dueDate: 1569963600000,
         },
       },
     },
@@ -33,17 +36,25 @@ const DB = (() => {
   };
 
   const deleteProject = ({ id }) => {
-    delete db[id];
-    storage.store(db);
+    const project = db[id];
+    if (project) {
+      delete db[id];
+      storage.store(db);
 
-    return db;
+      return db;
+    }
+    return false;
   };
 
   const editProject = ({ id, name }) => {
-    db[id].name = name;
-    storage.store(db);
+    const project = db[id];
+    if (project) {
+      db[id].name = name;
+      storage.store(db);
 
-    return db;
+      return db;
+    }
+    return false;
   };
 
   const getProject = ({ id }) => db[id];
@@ -51,11 +62,19 @@ const DB = (() => {
   const getAll = () => Object.keys(db).map((id) => db[id]);
 
   const createTodo = ({
-    projectId, id, title, desc, dueDate, priority, isDone,
+    projectId,
+    id,
+    title,
+    desc,
+    dueDate,
+    priority,
+    isDone,
   }) => {
-    if (db[projectId].todos[id]) return false;
+    const project = db[projectId];
 
-    if (db[projectId]) {
+    if (project) {
+      if (project.todos[id]) return false;
+
       const newTodo = todo({
         id: id || idGenerator(),
         title,
@@ -64,8 +83,9 @@ const DB = (() => {
         priority,
         isDone,
       });
-      db[projectId].todos[newTodo.id] = newTodo;
+      project.todos[newTodo.id] = newTodo;
       storage.store(db);
+
       return newTodo;
     }
     return false;
@@ -73,7 +93,6 @@ const DB = (() => {
 
   const deleteTodo = ({ projectId, todoId }) => {
     const targetProject = db[projectId];
-
     if (targetProject) {
       delete targetProject.todos[todoId];
       storage.store(db);
@@ -83,18 +102,23 @@ const DB = (() => {
     return false;
   };
 
-  const editTodo = ({
-    projectId, todoId, title, desc, dueDate, priority,
-  }) => {
+  const checkTodoExists = ({ projectId, todoId }) => {
     const targetProject = db[projectId];
-
     if (targetProject) {
       const targetTodo = targetProject.todos[todoId];
+      return targetTodo;
+    }
+    return false;
+  };
 
+  const editTodo = ({
+    projectId, todoId, title, desc, dueDate,
+  }) => {
+    const targetTodo = checkTodoExists({ projectId, todoId });
+    if (targetTodo) {
       if (title) targetTodo.title = title;
       if (desc) targetTodo.desc = desc;
       if (dueDate) targetTodo.dueDate = dueDate;
-      if (priority) targetTodo.priority = priority;
       storage.store(db);
 
       return db;
@@ -103,8 +127,7 @@ const DB = (() => {
   };
 
   const toggleTodoStatus = ({ projectId, todoId }) => {
-    const targetTodo = db[projectId].todos[todoId];
-
+    const targetTodo = checkTodoExists({ projectId, todoId });
     if (targetTodo) {
       targetTodo.isDone = !targetTodo.isDone;
       storage.store(db);
@@ -115,10 +138,11 @@ const DB = (() => {
   };
 
   const toggleTodoPriority = ({ projectId, todoId }) => {
-    const targetTodo = db[projectId].todos[todoId];
+    const targetTodo = checkTodoExists({ projectId, todoId });
     if (targetTodo) {
       targetTodo.priority = targetTodo.priority === '1' ? '2' : '1';
       storage.store(db);
+
       return targetTodo;
     }
     return false;
