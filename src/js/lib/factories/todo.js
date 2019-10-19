@@ -1,4 +1,4 @@
-import { isAfter, formatDistance } from 'date-fns';
+import { isAfter } from 'date-fns';
 
 const todo = ({
   id,

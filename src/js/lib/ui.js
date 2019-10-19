@@ -1,4 +1,4 @@
-import { formatDistance } from 'date-fns';
+import { isAfter, formatDistance } from 'date-fns';
 
 const UI = (() => {
   const renderStaticHtml = () => {
@@ -189,7 +189,14 @@ const UI = (() => {
 
     const elems = document.querySelectorAll('.datepicker');
     // eslint-disable-next-line no-undef
-    M.Datepicker.init(elems, { autoClose: true });
+    M.Datepicker.init(elems, {
+      autoClose: true,
+      disableDayFn: (date) => {
+        console.log(isAfter(new Date(), date));
+        if (isAfter(new Date(), date)) return true;
+        return false;
+      },
+    });
   };
 
   const renderProject = ({ project }) => {

@@ -49,6 +49,10 @@ input:-internal-autofill-selected {
   background-color: #f44336;
 }
 
+.is-disabled * {
+  color: gray !important;
+}
+
 .navbar-fixed {
   position: fixed;
   height: 3rem;
