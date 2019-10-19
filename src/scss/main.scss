@@ -1,0 +1,296 @@
+$base-color: #282828;
+
+body {
+  background-color: $base-color;
+  min-height: 100vh;
+  * {
+    color: rgba(255, 255, 255, 0.87) !important;
+  }
+}
+.max-width {
+  max-width: 935px;
+  width: 100%;
+  margin: auto;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+input {
+  text-indent: 1rem;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  &::placeholder {
+    color: gray;
+  }
+}
+
+input:-internal-autofill-selected {
+  background-color: red !important;
+}
+
+.checkbox-red[type='checkbox'].filled-in:checked + span:not(.lever):after {
+  border: 2px solid #f44336;
+  background-color: #f44336;
+}
+
+.checkbox-red[type='checkbox'].filled-in:not(:checked) + span {
+  &.red-text {
+    &::after {
+      border: 1px solid #f44336;
+    }
+  }
+}
+
+.datepicker-date-display,
+.datepicker-day-button:hover,
+.datepicker-table td.is-selected {
+  background-color: #f44336;
+}
+
+.is-disabled * {
+  color: gray !important;
+}
+
+.navbar-fixed {
+  position: fixed;
+  height: 3rem;
+  z-index: 9999;
+  background-color: $base-color;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0.281),
+    0 1px 5px 0 rgba(0, 0, 0, 0.034);
+
+  a {
+    display: flex;
+    .material-icons {
+      line-height: 3rem;
+      height: 3rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin: 0.5rem;
+    }
+  }
+}
+
+.modal {
+  background: none;
+  margin-top: 150px;
+  max-width: 400px;
+}
+
+main {
+  background-color: $base-color;
+
+  .max-width {
+    position: relative;
+
+    .sidenav {
+      height: 100%;
+      background: $base-color;
+      padding-top: 75px;
+      box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14), 0 3px 0 0 rgba(0, 0, 0, 0.12),
+        0 1px 0 0 rgba(0, 0, 0, 0.2);
+
+      &.sidenav-fixed {
+        position: absolute;
+      }
+
+      i {
+        margin-right: 1rem;
+        &.right {
+          margin: 0;
+        }
+      }
+
+      #projects-list {
+        text-transform: capitalize;
+        margin: 1rem 0;
+        li {
+          border-radius: 0.2rem;
+          &:hover {
+            background-color: #353535;
+          }
+        }
+      }
+    }
+  }
+
+  .todos-area {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    padding: 75px 30px;
+    background-color: #1f1f1f;
+
+    form {
+      .btn,
+      .btn-flat {
+        font-size: 0.75rem;
+      }
+    }
+
+    .hide-inline-form {
+      .base {
+        display: none;
+      }
+      &.hidden {
+        .base {
+          display: block;
+        }
+        .inline-form {
+          display: none;
+        }
+      }
+    }
+
+    #project-header {
+      height: 48px;
+      font-weight: bold;
+      text-transform: capitalize;
+
+      display: grid;
+
+      i {
+        cursor: pointer;
+      }
+
+      form {
+        display: grid;
+        grid-template-columns: auto 200px;
+        height: 45px;
+
+        div {
+          padding-top: 9px;
+        }
+
+        input {
+          ::placeholder {
+            color: gray;
+          }
+        }
+      }
+    }
+
+    .divider {
+      margin-top: 8px;
+    }
+
+    #todos-row {
+      width: 100%;
+      justify-content: space-between;
+      border-bottom: 1px solid #353535;
+
+      .base {
+        display: none;
+      }
+
+      &.hidden {
+
+        &:hover {
+          background-color: #282828;
+          cursor: text;
+        }
+        .base {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 44px;
+          div {
+            display: flex;
+            align-items: center;
+            label {
+              padding-top: 10px;
+            }
+            i {
+              cursor: pointer;
+            }
+
+            span{
+              &.true{
+                text-decoration: line-through;
+              }
+            }
+
+            span.badge.new:after {
+              content: '';
+            }
+          }
+        }
+      }
+
+      .inline-form {
+        grid-column: 1/3;
+        padding: 0;
+        form {
+          width: 100%;
+          margin: .5rem 0;
+
+          .row {
+            display: grid;
+            grid-template-columns: auto 180px;
+          }
+
+          .row,
+          .row2,
+          .row3 {
+            margin: 0;
+            height: 40px;
+
+            input, .btn{
+              height: 32px;
+            }
+
+            input {
+              width: 100%;
+              margin: 0;
+              font-size: 14px;
+              background-color: #1a1a1a;
+              border: 1px solid #333333 !important;
+            }
+          }
+        }
+      }
+    }
+
+    .modal {
+      background: $base-color;
+      max-width: 1200px;
+    }
+
+    #add-todo-btn {
+      height: 35px;
+      width: 150px;
+    }
+
+    #add-todo {
+      form {
+        margin-top: 1rem;
+        .row {
+          display: grid;
+          grid-template-columns: auto 150px;
+        }
+        .row,
+        .row2 {
+          margin: 0;
+
+          input {
+            height: 45px;
+            width: 100%;
+            background-color: #1a1a1a;
+            border: 1px solid #333333 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 980px) {
+  main {
+    .max-width {
+      padding-left: 300px;
+    }
+  }
+}
