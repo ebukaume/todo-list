@@ -1,4 +1,4 @@
-import { isAfter, formatDistance } from 'date-fns';
+import { isAfter, formatDistanceStrict } from 'date-fns';
 
 const UI = (() => {
   const renderStaticHtml = () => {
@@ -127,19 +127,21 @@ const UI = (() => {
     projectsList.innerHTML = html;
   };
 
+  const formatDate = ({ todo }) => (todo.dueDate
+    ? `Due ${formatDistanceStrict(new Date(todo.dueDate), new Date(), {
+      addSuffix: true,
+    })}`
+    : null);
+
   const renderTodos = ({ todosHash }) => {
     let html = '';
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
     todos.forEach((todo) => {
       const { id, title, desc } = todo;
-      const checked = todo.isDone ? 'checked="checked"' : '';
       const priority = todo.priority === '1' ? 'red-text' : '';
-      const dueDateFormatted = todo.dueDate
-        ? `Due in ${formatDistance(new Date(todo.dueDate), new Date())}`
-        : null;
-      const dateBadge = dueDateFormatted
-        ? `<span class="new red badge">${dueDateFormatted}</span>`
-        : '';
+      const dueDateFormatted = formatDate({ todo });
+      const dateBadge = `<span class="new red badge">${dueDateFormatted}</span>`;
+
       const formSchedulePlaceholder = dueDateFormatted || 'schedule';
       html += `
         <div id="todos-row" class="hide-inline-form hidden ">
@@ -147,13 +149,13 @@ const UI = (() => {
             <div>
               <label >
               <input id="${id}" type="checkbox" class="filled-in checkbox-red"
-              ${checked} />
+              ${todo.isDone ? 'checked="checked"' : ''} />
               <span class="${priority}" ></span>
               </label>
               <span class="truncate ${todo.isDone}">${title} </span>
             </div>
             <div >
-                ${dateBadge}
+                ${dueDateFormatted ? dateBadge : ''}
                 <i data-id="todo-flag" id="${id}" class="${priority} tiny material-icons right">flag</i>
                 <i data-id="todo-delete-btn" id="${id}" class=" tiny  material-icons right grey-text">
                   delete
@@ -192,7 +194,6 @@ const UI = (() => {
     M.Datepicker.init(elems, {
       autoClose: true,
       disableDayFn: (date) => {
-        console.log(isAfter(new Date(), date));
         if (isAfter(new Date(), date)) return true;
         return false;
       },
@@ -270,7 +271,8 @@ const UI = (() => {
         target.id === 'project-name'
         || target.id === 'add-todo-btn'
         || target.className === 'base'
-        || target.className === 'truncate'
+        || target.className === 'truncate false'
+        || target.className === 'truncate true'
         || target.className === 'new red badge'
       ) {
         showInlineForm({ path });

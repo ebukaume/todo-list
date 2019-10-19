@@ -6,20 +6,7 @@ import idGenerator from './util/id_generator';
 const DB = (() => {
   const db = {};
 
-  const demo = {
-    1: {
-      id: 1,
-      name: 'welcome!',
-      todos: {
-        2: {
-          id: 2,
-          title: 'Kill me',
-          desc: 'This is unhealthy',
-          dueDate: 1569963600000,
-        },
-      },
-    },
-  };
+  const demo = '{"1":{"id":"1","name":"welcome!","todos":{"818774414504":{"id":818774414504,"desc":"You can find the add todo item button at the bottom","title":"Create a New Todo Item","dueDate":null,"isDone":false,"priority":"2"},"1090049441464":{"id":1090049441464,"desc":"To avoid very long titles like that!","title":"You can expand each item to see and edit its description","dueDate":null,"isDone":false,"priority":"2"},"1394825007653":{"id":1394825007653,"desc":"You can schedule yours too!","title":"This one is Scheduled","dueDate":1572472800000,"isDone":false,"priority":"2"},"825061343273":{"id":825061343273,"desc":"","title":"This is one is past Due","dueDate":1570050000000,"isDone":false,"priority":"2"},"1500316958504":{"id":1500316958504,"desc":"","title":"This one is already done, no? so uncheck it!","dueDate":null,"isDone":true,"priority":"2"},"927933235701":{"id":927933235701,"desc":"Because reasons.","title":"This one is prioritized with a red flag!","dueDate":null,"isDone":false,"priority":"1"},"504366975793":{"id":504366975793,"desc":"Look to the left.","title":"Ok now go start your own project!","dueDate":null,"isDone":false,"priority":"2"}}}}';
 
   const createProject = ({ id, name }) => {
     if (db[id]) return false;
@@ -165,7 +152,7 @@ const DB = (() => {
     if (storageFetch && Object.keys(storageFetch).length > 0) {
       createFromHash(storageFetch);
     } else {
-      createFromHash(demo);
+      createFromHash(JSON.parse(demo));
     }
     storage.store(db);
   };
