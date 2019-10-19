@@ -1,6 +1,6 @@
 import '../scss/main.scss';
-import { da } from 'date-fns/locale';
 import App from './lib/app';
+
 
 const { projectsList, projectArea, createProjectForm } = App.initialize();
 

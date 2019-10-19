@@ -16,7 +16,7 @@ const UI = (() => {
       <h6 class="bold">Add project</h6>
       <div class="input-field">
       <label>Project name</label>
-        <input type="text" name="title" id="title" class="validate" autocomplete="off"
+        <input type="text" name="title" id="title" class="validate" autofocus autocomplete="off"
           required="" aria-required="true">
       </div>
       <button id="submit" class="red accent-4 modal-action btn waves-effect waves-light" type="submit"
@@ -92,6 +92,40 @@ const UI = (() => {
   let projectArea;
   let projectHeader;
 
+  const updateDomElements = () => {
+    createProjectForm = document.getElementById('create-project-form');
+    projectsList = document.getElementById('projects-list');
+    projectArea = document.getElementById('project-area');
+    projectTodos = document.getElementById('project-todos');
+    projectHeader = document.getElementById('project-header');
+  };
+
+  const hideAllInlineFroms = () => {
+    Array.from(document.getElementsByClassName('hide-inline-form')).forEach(
+      (node) => {
+        node.classList.add('hidden');
+      },
+    );
+    Array.from(document.getElementsByTagName('form')).forEach((form) => {
+      form.reset();
+    });
+  };
+
+  const renderProjectsList = ({ projects }) => {
+    let html = '';
+    projects.forEach((project) => {
+      html += `
+      <li ">
+        <a href="#!" class="project-btn" data-id="${project.id}">
+          ${project.name}
+        </a>
+      </li>
+      `;
+    });
+    projectsList.innerHTML = html;
+  };
+
+
   const renderTodos = ({ todosHash }) => {
     let html = '';
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
@@ -145,43 +179,14 @@ const UI = (() => {
           </div>
           </div>
 
-      `;
+          `;
     });
+
     projectTodos.innerHTML = html;
-  };
 
-
-  const renderProjectsList = ({ projects }) => {
-    let html = '';
-    projects.forEach((project) => {
-      html += `
-      <li ">
-        <a href="#!" class="project-btn" data-id="${project.id}">
-          ${project.name}
-        </a>
-      </li>
-      `;
-    });
-    projectsList.innerHTML = html;
-  };
-
-  const updateDomElements = () => {
-    createProjectForm = document.getElementById('create-project-form');
-    projectsList = document.getElementById('projects-list');
-    projectArea = document.getElementById('project-area');
-    projectTodos = document.getElementById('project-todos');
-    projectHeader = document.getElementById('project-header');
-  };
-
-  const hideAllInlineFroms = () => {
-    Array.from(document.getElementsByClassName('hide-inline-form')).forEach(
-      (node) => {
-        node.classList.add('hidden');
-      },
-    );
-    Array.from(document.getElementsByTagName('form')).forEach((form) => {
-      form.reset();
-    });
+    const elems = document.querySelectorAll('.datepicker');
+    // eslint-disable-next-line no-undef
+    M.Datepicker.init(elems, { autoClose: true });
   };
 
   const renderProject = ({ project }) => {
@@ -223,7 +228,6 @@ const UI = (() => {
     renderProjectsList({ projects });
     renderProject({ project: project || projects[0] });
   };
-
 
   const findInEventPath = ({ path, className }) => {
     let node;
