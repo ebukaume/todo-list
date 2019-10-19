@@ -8,13 +8,6 @@ const todo = ({
   priority = '2',
   isDone = false,
 }) => {
-  const dueDateFormatted = () => {
-    if (dueDate) {
-      return `Due in ${formatDistance(new Date(dueDate), new Date())}`;
-    }
-    return '';
-  };
-
   const isPassed = () => isAfter(new Date(), dueDate);
 
   return {
@@ -24,7 +17,6 @@ const todo = ({
     dueDate,
     isDone,
     priority,
-    dueDateFormatted,
     isPassed,
   };
 };

@@ -203,6 +203,12 @@ main {
               cursor: pointer;
             }
 
+            span{
+              &.true{
+                text-decoration: line-through;
+              }
+            }
+
             span.badge.new:after {
               content: '';
             }

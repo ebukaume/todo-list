@@ -1,3 +1,5 @@
+import { formatDistance } from 'date-fns';
+
 const UI = (() => {
   const renderStaticHtml = () => {
     document.getElementById('content').innerHTML = `
@@ -125,7 +127,6 @@ const UI = (() => {
     projectsList.innerHTML = html;
   };
 
-
   const renderTodos = ({ todosHash }) => {
     let html = '';
     const todos = Object.keys(todosHash).map((id) => todosHash[id]);
@@ -133,7 +134,9 @@ const UI = (() => {
       const { id, title, desc } = todo;
       const checked = todo.isDone ? 'checked="checked"' : '';
       const priority = todo.priority === '1' ? 'red-text' : '';
-      const dueDateFormatted = todo.dueDateFormatted();
+      const dueDateFormatted = todo.dueDate
+        ? `Due in ${formatDistance(new Date(todo.dueDate), new Date())}`
+        : null;
       const dateBadge = dueDateFormatted
         ? `<span class="new red badge">${dueDateFormatted}</span>`
         : '';
@@ -141,13 +144,13 @@ const UI = (() => {
       html += `
         <div id="todos-row" class="hide-inline-form hidden ">
           <div class="base">
-            <div >
+            <div>
               <label >
               <input id="${id}" type="checkbox" class="filled-in checkbox-red"
               ${checked} />
               <span class="${priority}" ></span>
               </label>
-              <span class="truncate">${title} </span>
+              <span class="truncate ${todo.isDone}">${title} </span>
             </div>
             <div >
                 ${dateBadge}
