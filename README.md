@@ -34,7 +34,7 @@ The full project requirements can be found [here](https://www.theodinproject.com
 - npm
 - webpack
 
-### ✨ [Live Demo](https://github.com/ebukaume/todo-list)
+### ✨ [Live Demo](https://raw.githack.com/ebukaume/todo-list/master/dist/index.html)
 
 ## Usage
 
