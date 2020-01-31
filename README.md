@@ -17,6 +17,13 @@
     <img alt="Twitter: ArNazeh" src="https://img.shields.io/twitter/follow/ArNazeh.svg?style=social" />
   </a>
 </p>
+<br>
+
+<p>
+  <a href="https://bookstore-react-redux.herokuapp.com" target="_blank">
+    <img alt="Website" src="./docs/todolist.png" />
+  </a>
+</p>
 
 <br>
 
@@ -84,3 +91,8 @@ Give a ⭐️ if you like this project!
 ## 📝 License
 
 This project is [MIT](https://github.com/ebukaume/todo-list/blob/master/LICENSE) licensed.
+
+## Contact me
+
+I am looking for my next opportunity. Reach out to me if you are looking to hire!
+_ebukaume@gmail.com_
