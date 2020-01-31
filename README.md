@@ -20,7 +20,7 @@
 <br>
 
 <p>
-  <a href="https://bookstore-react-redux.herokuapp.com" target="_blank">
+  <a href="https://raw.githack.com/ebukaume/todo-list/master/dist/index.html" target="_blank">
     <img alt="Website" src="./docs/todolist.png" />
   </a>
 </p>
